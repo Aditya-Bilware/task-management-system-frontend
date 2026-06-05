@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -45,10 +45,15 @@ const LabelText = ({ children }) => (
   </Typography>
 );
 
-const EditTaskModal = () => {
-  const navigate = useNavigate();
+const EditTaskModal = ({ open, taskId, onClose }) => {
+  // const navigate = useNavigate();
 
-  const { id } = useParams();
+  // const { id } = useParams();
+  // const location = useLocation();
+
+  const id = taskId;
+
+  // const from = location.state?.from || "table";
   const dispatch = useDispatch();
   const { selectedTask, updateTaskLoading } = useSelector(
     (state) => state.tasks,
@@ -60,7 +65,7 @@ const EditTaskModal = () => {
   const isEmployee = user?.role === "employee";
 
   const handleClose = () => {
-    navigate("/tasks");
+    onClose();
   };
 
   const [formData, setFormData] = useState(() => ({
@@ -78,12 +83,11 @@ const EditTaskModal = () => {
   }));
 
   useEffect(() => {
-    if (id) {
-      dispatch(fetchTaskById(id));
-    }
+    if (!open || !id) return;
 
+    dispatch(fetchTaskById(id));
     dispatch(fetchEmployees());
-  }, [id, dispatch]);
+  }, [open, id, dispatch]);
 
   useEffect(() => {
     if (!selectedTask) {
@@ -186,7 +190,16 @@ const EditTaskModal = () => {
 
     // SUCCESS / NO CHANGES
 
-    navigate("/tasks");
+    // navigate("/tasks");
+
+    // if (from === "details") {
+    //   await dispatch(fetchTaskById(id));
+    // } else {
+    //   navigate("/tasks");
+    // }
+
+    await dispatch(fetchTaskById(id));
+    onClose();
 
     // no skeleton for no changes
     if (res.payload.message !== "No changes detected") {
@@ -226,7 +239,7 @@ const EditTaskModal = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Dialog
-        open={Boolean(id)}
+        open={open}
         onClose={handleClose}
         TransitionComponent={Fade}
         transitionDuration={{ enter: 240, exit: 180 }}

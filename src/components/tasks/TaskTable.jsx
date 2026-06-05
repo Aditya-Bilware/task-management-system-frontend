@@ -91,6 +91,8 @@ const TaskTable = () => {
 
   const [searchInput, setSearchInput] = useState(filters.search || "");
 
+  const [editTaskId, setEditTaskId] = useState(null);
+
   // pagination
   const handleChange = (e, value) => {
     dispatch(setLoadingType("pagination"));
@@ -713,9 +715,7 @@ const TaskTable = () => {
                   <Tooltip title="Edit Task" arrow>
                     <IconButton
                       size="small"
-                      onClick={() => {
-                        navigate(`/tasks/${task._id}/edit`);
-                      }}
+                      onClick={() => setEditTaskId(task._id)}
                       sx={{
                         color: "#2563eb",
                         opacity: 0.7,
@@ -801,7 +801,12 @@ const TaskTable = () => {
           </Box>
         )}
       </Card>
-      {location.pathname.includes("/edit") && <EditTaskModal taskId={id} />}
+      {/* {location.pathname.includes("/edit") && <EditTaskModal taskId={id} />} */}
+      <EditTaskModal
+        open={Boolean(editTaskId)}
+        taskId={editTaskId}
+        onClose={() => setEditTaskId(null)}
+      />
       {location.pathname.includes("/delete") && <DeleteTaskModal taskId={id} />}
     </Box>
   );

@@ -20,25 +20,18 @@ import { minDelay } from "../../utils/minDelay";
 
 const initialState = {
   historyTasks: [],
-
   historyTasksLoading: false,
-
   historyTasksError: null,
-
   initialLoading: true,
-
   loadingType: null,
-
   pagination: {},
 
   filters: {
     page: 1,
-
     limit: 10,
-
     search: "",
-
     filter: "all-history",
+    assignedTo: "",
   },
 };
 

@@ -1,9 +1,19 @@
-import { Avatar, Box, Card, Chip, Divider, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  Chip,
+  Divider,
+  Typography,
+  Button,
+} from "@mui/material";
+
+import EditTaskModal from "./EditTaskModal";
 
 import { fetchTaskById } from "../../features/tasks/taskSlice";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ActivityTimeline from "../../components/tasks/ActivityTimeline";
 import TaskDetailsSkeleton from "../../components/skeletons/tasks/TaskDetailsSkeleton";
 import { getPriorityColor } from "../../utils/priority";
@@ -16,11 +26,17 @@ const TaskDetails = () => {
     (state) => state.tasks,
   );
 
+  const [editOpen, setEditOpen] = useState(false);
+
   useEffect(() => {
     if (id) {
       dispatch(fetchTaskById(id));
     }
   }, [dispatch, id]);
+
+  console.log("selectedTaskLoading", selectedTaskLoading);
+  console.log("selectedTask", selectedTask);
+  console.log("selectedTaskError", selectedTaskError);
 
   if (selectedTaskLoading) {
     return <TaskDetailsSkeleton />;
@@ -53,20 +69,57 @@ const TaskDetails = () => {
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
-          gap: 1,
+          justifyContent: "space-between",
+          alignItems: {
+            xs: "stretch",
+            sm: "flex-start",
+          },
+
+          flexDirection: {
+            xs: "column",
+            sm: "row",
+          },
+
+          gap: 2,
           mb: 3,
         }}
       >
-        <Typography
+        {/* LEFT */}
+        <Box>
+          <Typography
+            sx={{
+              fontSize: {
+                xs: "1.4rem",
+                md: "1.7rem",
+              },
+
+              fontWeight: 700,
+              color: "#111827",
+            }}
+          >
+            Tasks
+          </Typography>
+        </Box>
+
+        {/* RIGHT */}
+        <Button
+          onClick={() => setEditOpen(true)}
+          variant="contained"
           sx={{
-            fontSize: "1rem",
-            color: "#111827",
-            fontWeight: 700,
+            textTransform: "none",
+            borderRadius: "10px",
+            px: 2.5,
+            py: 1,
+            fontWeight: 600,
+            boxShadow: "none",
+            width: {
+              xs: "100%",
+              sm: "auto",
+            },
           }}
         >
-          Task Details
-        </Typography>
+          Edit Task
+        </Button>
       </Box>
       {/* Main Card */}
       <Card
@@ -528,6 +581,11 @@ const TaskDetails = () => {
         {/* ACTIVITY TIMELINE */}
         <ActivityTimeline taskId={id} />
       </Card>
+      <EditTaskModal
+        open={editOpen}
+        taskId={id}
+        onClose={() => setEditOpen(false)}
+      />
     </Box>
   );
 };

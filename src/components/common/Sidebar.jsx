@@ -62,7 +62,7 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
       path: "/employees",
     },
     {
-      text: "Completed Tasks",
+      text: "Task History",
       icon: <ChecklistOutlinedIcon />,
       path: "/completed",
     },
@@ -81,7 +81,7 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
       path: "/tasks",
     },
     {
-      text: "Completed Tasks",
+      text: "Task History",
       icon: <ChecklistOutlinedIcon />,
       path: "/completed",
     },

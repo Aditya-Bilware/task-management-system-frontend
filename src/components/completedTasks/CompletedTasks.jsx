@@ -133,6 +133,15 @@ const CompletedTasks = () => {
     };
   }, [dispatch]);
 
+  const taskCount =
+    filters.filter === "completed"
+      ? "Completed Tasks"
+      : filters.filter === "rejected"
+        ? "Rejected Tasks"
+        : filters.filter === "deleted"
+          ? "Deleted Tasks"
+          : "Total Tasks";
+
   // INITIAL LOADING
 
   if (initialLoading) {
@@ -202,7 +211,7 @@ const CompletedTasks = () => {
 
         <Chip
           icon={<HistoryOutlinedIcon />}
-          label={`${pagination?.totalTasks || 0} Archived Tasks`}
+          label={`${pagination?.totalTasks || 0} ${taskCount}`}
           sx={{
             borderRadius: "10px",
             fontWeight: 700,
