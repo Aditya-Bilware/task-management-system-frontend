@@ -29,6 +29,7 @@ import {
 import CompletedTasksSkeleton from "../skeletons/completedTasks/CompletedTasksSkeleton";
 import { getPriorityColor } from "../../utils/priority";
 import CompletedTasksRowSkeleton from "../skeletons/completedTasks/CompletedTasksRowSkeleton ";
+import { fetchEmployees } from "../../features/users/employeeSlice";
 
 const getStatusStyles = (status) => {
   switch (status) {
@@ -72,6 +73,8 @@ const CompletedTasks = () => {
   } = useSelector((state) => state.taskHistory);
 
   const { user } = useSelector((state) => state.auth);
+
+  const { employees } = useSelector((state) => state.employee);
 
   const tableColumns =
     user?.role === "manager"
@@ -124,6 +127,10 @@ const CompletedTasks = () => {
 
     return () => clearTimeout(timer);
   }, [searchInput, filters.search, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchEmployees());
+  }, [dispatch]);
 
   // RESET FILTERS
 

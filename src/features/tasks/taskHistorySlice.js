@@ -17,6 +17,7 @@ export const fetchTaskHistory = createAsyncThunk(
 
 import { createSlice } from "@reduxjs/toolkit";
 import { minDelay } from "../../utils/minDelay";
+import { setAssignedTo } from "./taskSlice";
 
 const initialState = {
   historyTasks: [],
@@ -55,6 +56,10 @@ const taskHistorySlice = createSlice({
 
     setLoadingType: (state, action) => {
       state.loadingType = action.payload;
+    },
+
+    setAssignedTo: (state, action) => {
+      state.filters.assignedTo = action.payload;
     },
 
     resetTaskHistoryFilters: (state) => {
