@@ -273,6 +273,10 @@ const taskSlice = createSlice({
         state.activitiesError = action.payload;
       })
 
+      .addCase(updateTask.pending, (state) => {
+        state.updateTaskLoading = true;
+      })
+
       .addCase(updateTask.fulfilled, (state, action) => {
         state.updateTaskLoading = false;
         state.updatingTaskId = null;
