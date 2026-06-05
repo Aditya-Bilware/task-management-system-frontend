@@ -13,6 +13,7 @@ import {
 
 import SearchIcon from "@mui/icons-material/Search";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
+import { enqueueSnackbar } from "notistack";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,11 +26,13 @@ import {
   setLoadingType,
   setPage,
   setSearch,
+  setAssignedTo,
 } from "../../features/tasks/taskHistorySlice";
 import CompletedTasksSkeleton from "../skeletons/completedTasks/CompletedTasksSkeleton";
 import { getPriorityColor } from "../../utils/priority";
 import CompletedTasksRowSkeleton from "../skeletons/completedTasks/CompletedTasksRowSkeleton ";
 import { fetchEmployees } from "../../features/users/employeeSlice";
+import { useNavigate } from "react-router-dom";
 
 const getStatusStyles = (status) => {
   switch (status) {
@@ -61,6 +64,7 @@ const getStatusStyles = (status) => {
 
 const CompletedTasks = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     historyTasks,
@@ -326,6 +330,39 @@ const CompletedTasks = () => {
             <MenuItem value="rejected">Rejected</MenuItem>
             <MenuItem value="deleted">Deleted</MenuItem>
           </Select>
+
+          {user?.role === "manager" && (
+            <Select
+              size="small"
+              value={filters.assignedTo || "all-users"}
+              onChange={(e) => {
+                dispatch(setLoadingType("filter"));
+
+                dispatch(
+                  setAssignedTo(
+                    e.target.value === "all-users" ? "" : e.target.value,
+                  ),
+                );
+
+                dispatch(setPage(1));
+              }}
+              sx={{
+                minWidth: {
+                  xs: "100%",
+                  sm: 220,
+                },
+                borderRadius: "12px",
+              }}
+            >
+              <MenuItem value="all-users">All Users</MenuItem>
+
+              {employees.map((emp) => (
+                <MenuItem key={emp._id} value={emp._id}>
+                  {emp.name}
+                </MenuItem>
+              ))}
+            </Select>
+          )}
         </Box>
       </Card>
 
@@ -435,6 +472,15 @@ const CompletedTasks = () => {
                 {/* TITLE */}
 
                 <Typography
+                  onClick={() => {
+                    if (task.finalStatus === "deleted") {
+                      enqueueSnackbar("Deleted tasks cannot be viewed", {
+                        variant: "warning",
+                      });
+                      return;
+                    }
+                    navigate(`/tasks/${task._id}`);
+                  }}
                   sx={{
                     fontSize: "0.92rem",
                     fontWeight: 700,

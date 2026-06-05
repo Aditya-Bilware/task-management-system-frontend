@@ -90,14 +90,14 @@ const TaskDetails = () => {
             sx={{
               fontSize: {
                 xs: "1.4rem",
-                md: "1.7rem",
+                md: "1.5rem",
               },
 
               fontWeight: 700,
               color: "#111827",
             }}
           >
-            Tasks
+            Task Details
           </Typography>
         </Box>
 
@@ -585,6 +585,7 @@ const TaskDetails = () => {
         open={editOpen}
         taskId={id}
         onClose={() => setEditOpen(false)}
+        shouldFetchTask={false}
       />
     </Box>
   );

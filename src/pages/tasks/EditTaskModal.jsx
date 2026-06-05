@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -45,7 +44,7 @@ const LabelText = ({ children }) => (
   </Typography>
 );
 
-const EditTaskModal = ({ open, taskId, onClose }) => {
+const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
   // const navigate = useNavigate();
 
   // const { id } = useParams();
@@ -83,11 +82,14 @@ const EditTaskModal = ({ open, taskId, onClose }) => {
   }));
 
   useEffect(() => {
-    if (!open || !id) return;
+    if (!open) return;
 
-    dispatch(fetchTaskById(id));
     dispatch(fetchEmployees());
-  }, [open, id, dispatch]);
+
+    if (shouldFetchTask && id) {
+      dispatch(fetchTaskById(id));
+    }
+  }, [open, id, shouldFetchTask, dispatch]);
 
   useEffect(() => {
     if (!selectedTask) {
@@ -136,7 +138,7 @@ const EditTaskModal = ({ open, taskId, onClose }) => {
         payload.status = formData.status;
       if (formData.priority !== selectedTask.priority)
         payload.priority = formData.priority;
-      if (formData.assignedTo !== selectedTask.assignedTo)
+      if (formData.assignedTo !== selectedTask.assignedTo?._id)
         payload.assignedTo = formData.assignedTo;
       if (
         formData.dueDate?.toISOString() !==

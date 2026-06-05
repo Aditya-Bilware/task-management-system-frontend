@@ -806,6 +806,7 @@ const TaskTable = () => {
         open={Boolean(editTaskId)}
         taskId={editTaskId}
         onClose={() => setEditTaskId(null)}
+        shouldFetchTask={true}
       />
       {location.pathname.includes("/delete") && <DeleteTaskModal taskId={id} />}
     </Box>

@@ -34,6 +34,7 @@ const Navbar = ({ setProfileOpen }) => {
   const getTitle = (path) => {
     const segment = path.split("/")[1];
     if (!segment || segment === "dashboard") return "Dashboard";
+    if (segment === "tasks") return "Task";
     if (segment === "completed") return "Task History";
     return (
       segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ")
