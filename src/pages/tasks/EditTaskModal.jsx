@@ -675,13 +675,27 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
               disabled={updateTaskLoading}
               onClick={handleSubmit}
               sx={{
+                borderRadius: "12px",
+
                 textTransform: "none",
-                borderRadius: "8px",
-                px: 3,
-                fontSize: "0.875rem",
-                fontWeight: 600,
+
+                px: 4,
+
+                py: 1,
+                height: 48,
+
+                fontWeight: 700,
+                fontSize: "0.92rem",
+                letterSpacing: "0.01em",
+                boxShadow: "none",
+
                 background: "#2563eb",
-                "&:hover": { background: "#1d4ed8" },
+
+                "&:hover": {
+                  background: "#1d4ed8",
+
+                  boxShadow: "none",
+                },
               }}
             >
               {updateTaskLoading ? "Updating..." : "Update Task"}{" "}
