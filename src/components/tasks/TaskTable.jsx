@@ -30,7 +30,6 @@ import {
   setPriority,
   setStatus,
   setAssignedTo,
-  // setDashboardFilter,
 } from "../../features/tasks/taskSlice";
 
 import { getPriorityColor } from "../../utils/priority";
@@ -47,7 +46,6 @@ import SingleRowSkeleton from "../skeletons/tasks/SingleRowSkeleton";
 import DeleteTaskModal from "../../pages/tasks/DeleteTaskModal";
 import { resetTaskFilters } from "../../features/tasks/taskSlice";
 import { fetchEmployees } from "../../features/users/employeeSlice";
-import { isTaskOverdue } from "../../utils/overdue";
 const TaskTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -57,7 +55,6 @@ const TaskTable = () => {
   const assignedEmployeeFromState = location.state?.assignedTo || "";
   const statusFromState = location.state?.status || "";
   const priorityFromState = location.state?.priority || "";
-  // const dashboardFilterFromState = location.state?.dashboardFilter || "";
 
   const {
     tasks,
@@ -106,14 +103,12 @@ const TaskTable = () => {
 
   // search
   const handleSearch = (e) => {
-    // dispatch(setDashboardFilter(""));
     setSearchInput(e.target.value);
   };
 
   //   priority filter
   const handlePriority = (e) => {
     dispatch(setLoadingType("filter"));
-    // dispatch(setDashboardFilter(""));
     dispatch(
       setPriority(e.target.value === "all-priority" ? "" : e.target.value),
     );
@@ -124,7 +119,6 @@ const TaskTable = () => {
   const handleStatus = (e) => {
     const value = e.target.value;
     dispatch(setLoadingType("filter"));
-    // dispatch(setDashboardFilter(""));
     dispatch(setStatus(value === "all-status" ? "" : value));
     dispatch(setPage(1));
   };
@@ -132,7 +126,6 @@ const TaskTable = () => {
   // assignedTo filter
   const handleAssignedTo = (e) => {
     dispatch(setLoadingType("filter"));
-    // dispatch(setDashboardFilter(""));
     dispatch(
       setAssignedTo(e.target.value === "all-users" ? "" : e.target.value),
     );
@@ -162,11 +155,6 @@ const TaskTable = () => {
   useEffect(() => {
     let hasFilter = false;
 
-    // if (dashboardFilterFromState) {
-    //   dispatch(setDashboardFilter(dashboardFilterFromState));
-    //   hasFilter = true;
-    // }
-
     if (statusFromState) {
       dispatch(setStatus(statusFromState));
       hasFilter = true;
@@ -185,13 +173,7 @@ const TaskTable = () => {
     if (hasFilter) {
       dispatch(setPage(1));
     }
-  }, [
-    assignedEmployeeFromState,
-    // dashboardFilterFromState,
-    statusFromState,
-    priorityFromState,
-    dispatch,
-  ]);
+  }, [assignedEmployeeFromState, statusFromState, priorityFromState, dispatch]);
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -224,7 +206,14 @@ const TaskTable = () => {
     return <Typography color="error">{tasksError}</Typography>;
   }
 
-  const filteredTasks = tasks;
+  const filteredTasks =
+    filters.status === "overdue"
+      ? tasks.filter(
+          (task) =>
+            new Date(task.dueDate) < new Date() &&
+            !["done", "rejected"].includes(task.status),
+        )
+      : tasks;
 
   return (
     <Box
@@ -415,7 +404,7 @@ const TaskTable = () => {
             >
               <MenuItem value="all-status">All Status</MenuItem>
               <MenuItem value="active">Active Tasks</MenuItem>
-              <MenuItem value="overdue">Overdue Tasks</MenuItem>{" "}
+              <MenuItem value="overdue">Overdue Tasks</MenuItem>
               <MenuItem value="backlog">Backlog</MenuItem>
               <MenuItem value="next">Next</MenuItem>
               <MenuItem value="on-hold">On-Hold</MenuItem>
@@ -514,7 +503,9 @@ const TaskTable = () => {
 
             const status = getStatusColor(task.status);
 
-            const isOverDue = isTaskOverdue(task);
+            const isOverDue =
+              new Date(task.dueDate) < new Date() &&
+              !["done", "rejected"].includes(task.status);
 
             if (updatingTaskId === task._id) {
               return <SingleRowSkeleton key={index} />;

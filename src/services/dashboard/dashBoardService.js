@@ -2,6 +2,7 @@ import API from "/src/api/axios.js";
 export const getStats = async () => {
   try {
     const res = await API.get("/dashboard/stats");
+    console.log(res);
     return res.data;
   } catch (err) {
     console.log("get stats service error", err);

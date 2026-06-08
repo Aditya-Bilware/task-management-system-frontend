@@ -18,6 +18,7 @@ const StatsCards = () => {
   const { stats, statsLoading, statsError } = useSelector(
     (state) => state.dashboard,
   );
+  console.log(stats);
 
   //fetch stats
   useEffect(() => {
@@ -47,21 +48,6 @@ const StatsCards = () => {
           },
         }),
     },
-
-    {
-      title: "Active tasks",
-      value: stats?.activeTasks || 0,
-      subtitle: "Active tasks",
-      icon: <AutorenewOutlinedIcon />,
-      color: "#7c3aed",
-      bg: "#ede9fe",
-      onclick: () =>
-        navigate("/tasks", {
-          state: {
-            status: "active",
-          },
-        }),
-    },
     {
       title: "Overdue Tasks",
       value: stats?.overdueTasks || 0,
@@ -73,6 +59,20 @@ const StatsCards = () => {
         navigate("/tasks", {
           state: {
             status: "overdue",
+          },
+        }),
+    },
+    {
+      title: "In Progress",
+      value: stats?.activeTasks || 0,
+      subtitle: "Active tasks",
+      icon: <AutorenewOutlinedIcon />,
+      color: "#7c3aed",
+      bg: "#ede9fe",
+      onclick: () =>
+        navigate("/tasks", {
+          state: {
+            status: "active",
           },
         }),
     },

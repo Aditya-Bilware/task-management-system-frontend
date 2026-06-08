@@ -135,7 +135,7 @@ const initialState = {
     status: "",
     priority: "",
     assignedTo: "",
-    // dashboardFilter: "",
+    dashboardFilter: "",
   },
 
   createTaskLoading: false,
@@ -175,9 +175,9 @@ const taskSlice = createSlice({
     setAssignedTo: (state, action) => {
       state.filters.assignedTo = action.payload;
     },
-    // setDashboardFilter: (state, action) => {
-    //   state.filters.dashboardFilter = action.payload;
-    // },
+    setDashboardFilter: (state, action) => {
+      state.filters.dashboardFilter = action.payload;
+    },
     setLoadingType: (state, action) => {
       state.loadingType = action.payload;
     },
@@ -205,7 +205,7 @@ const taskSlice = createSlice({
         priority: "",
         status: "",
         assignedTo: "",
-        // dashboardFilter: "",
+        dashboardFilter: "",
         page: 1,
       };
     },
@@ -325,7 +325,7 @@ export const {
   setPriority,
   setAssignedTo,
   setFilters,
-  // setDashboardFilter,
+  setDashboardFilter,
   setLoadingType,
   setUpdatingTaskId,
   clearUpdatingTaskId,
