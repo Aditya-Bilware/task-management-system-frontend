@@ -18,6 +18,7 @@ import ActivityTimeline from "../../components/tasks/ActivityTimeline";
 import TaskDetailsSkeleton from "../../components/skeletons/tasks/TaskDetailsSkeleton";
 import { getPriorityColor } from "../../utils/priority";
 import { getStatusColor } from "../../utils/status";
+import { isTaskOverdue } from "../../utils/overdue";
 const TaskDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -50,9 +51,8 @@ const TaskDetails = () => {
 
   const status = getStatusColor(selectedTask.status);
 
-  const isOverDue =
-    new Date(selectedTask.dueDate) < new Date() &&
-    !["done", "rejected"].includes(selectedTask.status);
+  const isOverDue = isTaskOverdue(selectedTask);
+
   return (
     <Box
       sx={{

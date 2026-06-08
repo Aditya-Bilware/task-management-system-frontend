@@ -6,6 +6,7 @@ import { fetchRecentTasks } from "../../features/dashboard/dashboardSlice";
 import RecentTaskTableSkeleton from "../skeletons/dashboard/RecentTasksSkeleton";
 import { getPriorityColor } from "../../utils/priority";
 import { getStatusColor } from "../../utils/status";
+import { isTaskOverdue } from "../../utils/overdue";
 
 const RecentTaskTable = () => {
   const dispatch = useDispatch();
@@ -117,9 +118,7 @@ const RecentTaskTable = () => {
 
         const status = getStatusColor(task.status);
 
-        const isOverDue =
-          new Date(task.dueDate) < new Date() &&
-          !["done", "rejected"].includes(task.status);
+        const isOverDue = isTaskOverdue(task);
 
         return (
           <Box

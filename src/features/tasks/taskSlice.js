@@ -40,12 +40,7 @@ export const fetchTasks = createAsyncThunk(
 
       const filters = state.tasks.filters;
 
-      const updatedFilters = {
-        ...filters,
-        status: filters.status === "overdue" ? "" : filters.status,
-      };
-
-      const res = await getTasks(updatedFilters);
+      const res = await getTasks(filters);
 
       await minDelay(start);
 
@@ -140,6 +135,7 @@ const initialState = {
     status: "",
     priority: "",
     assignedTo: "",
+    // dashboardFilter: "",
   },
 
   createTaskLoading: false,
@@ -179,6 +175,9 @@ const taskSlice = createSlice({
     setAssignedTo: (state, action) => {
       state.filters.assignedTo = action.payload;
     },
+    // setDashboardFilter: (state, action) => {
+    //   state.filters.dashboardFilter = action.payload;
+    // },
     setLoadingType: (state, action) => {
       state.loadingType = action.payload;
     },
@@ -206,6 +205,7 @@ const taskSlice = createSlice({
         priority: "",
         status: "",
         assignedTo: "",
+        // dashboardFilter: "",
         page: 1,
       };
     },
@@ -325,6 +325,7 @@ export const {
   setPriority,
   setAssignedTo,
   setFilters,
+  // setDashboardFilter,
   setLoadingType,
   setUpdatingTaskId,
   clearUpdatingTaskId,

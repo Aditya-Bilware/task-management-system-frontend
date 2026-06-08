@@ -222,7 +222,7 @@ const CompletedTasks = () => {
 
         <Chip
           icon={<HistoryOutlinedIcon />}
-          label={`${pagination?.totalTasks || 0} ${taskCount}`}
+          label={`${pagination?.totalTasks || 0}  ${taskCount}`}
           sx={{
             borderRadius: "10px",
             fontWeight: 700,
