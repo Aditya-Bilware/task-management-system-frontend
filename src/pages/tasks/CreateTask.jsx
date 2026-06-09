@@ -39,14 +39,14 @@ const priorities = [
   "unassigned",
 ];
 
-const statuses = [
-  "in-progress",
-  "next",
-  "on-hold",
-  "done",
-  "backlog",
-  "rejected",
-];
+// const statuses = [
+//   "in-progress",
+//   "next",
+//   "on-hold",
+//   "done",
+//   "backlog",
+//   "rejected",
+// ];
 
 const enterpriseInputStyles = {
   "& .MuiOutlinedInput-root": {
@@ -103,6 +103,8 @@ const CreateTask = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
+  const { user } = useSelector((state) => state.auth);
+
   const { employees, employeesLoading } = useSelector(
     (state) => state.employee,
   );
@@ -117,6 +119,11 @@ const CreateTask = () => {
     assignedTo: selectedEmployee || null,
     dueDate: null,
   });
+
+  const isFormValid =
+    user?.role === "manager"
+      ? formData.title.trim() && formData.priority && formData.assignedTo
+      : formData.title.trim() && formData.priority;
 
   useEffect(() => {
     dispatch(fetchEmployees());
@@ -282,8 +289,9 @@ const CreateTask = () => {
                     fontWeight: "700",
                   }}
                 >
-                  <LabelText>Task Title</LabelText>
-
+                  <LabelText>
+                    Task Title <span style={{ color: "red" }}>*</span>
+                  </LabelText>
                   <TextField
                     fullWidth
                     name="title"
@@ -324,8 +332,9 @@ const CreateTask = () => {
                   }}
                 >
                   <Box>
-                    <LabelText>Priority</LabelText>
-
+                    <LabelText>
+                      Priority <span style={{ color: "red" }}>*</span>
+                    </LabelText>
                     <TextField
                       select
                       fullWidth
@@ -363,38 +372,31 @@ const CreateTask = () => {
                   <Box>
                     <LabelText>Status</LabelText>
 
-                    <TextField
-                      select
-                      fullWidth
-                      name="status"
-                      value={formData.status}
-                      onChange={handleChange}
-                      placeholder="Select status"
-                      sx={enterpriseInputStyles}
+                    <Box
+                      sx={{
+                        height: 56,
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "14px",
+                        px: 2,
+                        display: "flex",
+                        alignItems: "center",
+                        background: "#fff",
+                      }}
                     >
-                      {statuses.map((status) => (
-                        <MenuItem key={status} value={status}>
-                          <Box
-                            sx={{
-                              px: 1.4,
-                              py: 0.5,
-
-                              borderRadius: "8px",
-
-                              fontSize: "0.9rem",
-
-                              fontWeight: 900,
-
-                              textTransform: "capitalize",
-
-                              ...getStatusColor(status),
-                            }}
-                          >
-                            {status}
-                          </Box>
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                      <Box
+                        sx={{
+                          px: 1.4,
+                          py: 0.5,
+                          borderRadius: "8px",
+                          fontSize: "0.9rem",
+                          fontWeight: 900,
+                          textTransform: "capitalize",
+                          ...getStatusColor("next"),
+                        }}
+                      >
+                        Next
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
 
@@ -413,71 +415,81 @@ const CreateTask = () => {
                 >
                   {/* ASSIGNED TO */}
                   <Box>
-                    <LabelText>Assign To</LabelText>
+                    <LabelText>
+                      Assign To <span style={{ color: "red" }}>*</span>
+                    </LabelText>{" "}
+                    {user?.role === "manager" ? (
+                      <Autocomplete
+                        options={employees}
+                        value={formData.assignedTo}
+                        onChange={(e, value) => {
+                          setFormData((prev) => ({
+                            ...prev,
+                            assignedTo: value,
+                          }));
+                        }}
+                        getOptionLabel={(emp) => emp.name}
+                        renderOption={(props, emp) => {
+                          const { key, ...optionProps } = props;
 
-                    <Autocomplete
-                      options={employees}
-                      value={formData.assignedTo}
-                      onChange={(e, value) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          assignedTo: value,
-                        }));
-                      }}
-                      getOptionLabel={(emp) => emp.name}
-                      renderOption={(props, emp) => {
-                        const { key, ...optionProps } = props;
-
-                        return (
-                          <Box
-                            key={key}
-                            component={"li"}
-                            {...optionProps}
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1.5,
-                              py: 1,
-                            }}
-                          >
-                            <Avatar
+                          return (
+                            <Box
+                              key={key}
+                              component={"li"}
+                              {...optionProps}
                               sx={{
-                                width: 32,
-                                height: 32,
-                                fontSize: "0.78rem",
-                                bgcolor: "#2563eb",
-                                fontWeight: 600,
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 1.5,
+                                py: 1,
                               }}
                             >
-                              {emp.name[0]}
-                            </Avatar>
-                            <Box>
-                              <Typography
+                              <Avatar
                                 sx={{
-                                  fontSize: "0.88rem",
+                                  width: 32,
+                                  height: 32,
+                                  fontSize: "0.78rem",
+                                  bgcolor: "#2563eb",
                                   fontWeight: 600,
-                                  color: "#0f172a",
                                 }}
                               >
-                                {emp.name}
-                              </Typography>
-                              <Typography
-                                sx={{ fontSize: "0.75rem", color: "#64748b" }}
-                              >
-                                {emp.employeeCode}
-                              </Typography>
+                                {emp.name[0]}
+                              </Avatar>
+                              <Box>
+                                <Typography
+                                  sx={{
+                                    fontSize: "0.88rem",
+                                    fontWeight: 600,
+                                    color: "#0f172a",
+                                  }}
+                                >
+                                  {emp.name}
+                                </Typography>
+                                <Typography
+                                  sx={{ fontSize: "0.75rem", color: "#64748b" }}
+                                >
+                                  {emp.employeeCode}
+                                </Typography>
+                              </Box>
                             </Box>
-                          </Box>
-                        );
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          placeholder="Select Employee"
-                          sx={enterpriseInputStyles}
-                        />
-                      )}
-                    />
+                          );
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            placeholder="Select Employee"
+                            sx={enterpriseInputStyles}
+                          />
+                        )}
+                      />
+                    ) : (
+                      <TextField
+                        fullWidth
+                        value={`${user.name}`}
+                        disabled
+                        sx={enterpriseInputStyles}
+                      />
+                    )}
                   </Box>
 
                   {/* DUE DATE */}
@@ -518,7 +530,7 @@ const CreateTask = () => {
                   <Button
                     variant="contained"
                     onClick={handleSubmit}
-                    disabled={createTaskLoading}
+                    disabled={!isFormValid || createTaskLoading}
                     sx={{
                       borderRadius: "12px",
 

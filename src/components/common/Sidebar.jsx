@@ -81,6 +81,11 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
       path: "/tasks",
     },
     {
+      text: "Create Task",
+      icon: <Create />,
+      path: "/tasks/create",
+    },
+    {
       text: "Task History",
       icon: <ChecklistOutlinedIcon />,
       path: "/completed",

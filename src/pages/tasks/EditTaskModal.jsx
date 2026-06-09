@@ -63,6 +63,13 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
 
   const isEmployee = user?.role === "employee";
 
+  const isSelfCreated = selectedTask?.createdBy?._id === user?._id;
+
+  const canFullyEdit =
+    user?.role === "manager" || (user?.role === "employee" && isSelfCreated);
+
+  const canEditStatusOnly = user?.role === "employee" && !isSelfCreated;
+
   const handleClose = () => {
     onClose();
   };
@@ -80,6 +87,10 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
 
     dueDate: selectedTask?.dueDate ? new Date(selectedTask.dueDate) : null,
   }));
+
+  const originalDueDate = selectedTask?.dueDate
+    ? new Date(selectedTask.dueDate).toISOString()
+    : null;
 
   useEffect(() => {
     if (!open) return;
@@ -116,7 +127,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
   const handleSubmit = async () => {
     let payload;
 
-    if (isEmployee) {
+    if (canEditStatusOnly) {
       if (formData.status === selectedTask.status) {
         enqueueSnackbar("No changes detected", {
           variant: "info",
@@ -125,9 +136,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
         return;
       }
 
-      payload = {
-        status: formData.status,
-      };
+      payload.status = formData.status;
     } else {
       payload = {};
 
@@ -138,21 +147,19 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
         payload.status = formData.status;
       if (formData.priority !== selectedTask.priority)
         payload.priority = formData.priority;
-      if (formData.assignedTo !== selectedTask.assignedTo?._id)
-        payload.assignedTo = formData.assignedTo;
       if (
-        formData.dueDate?.toISOString() !==
-        new Date(selectedTask.dueDate).toISOString()
-      )
+        user?.role === "manager" &&
+        formData.assignedTo !== selectedTask.assignedTo?._id
+      ) {
+        payload.assignedTo = formData.assignedTo;
+      }
+      if (formData.dueDate?.toISOString() !== originalDueDate)
         payload.dueDate = formData.dueDate;
     }
 
     // frontend due date validation
 
-    const dueDateChanged =
-      formData.dueDate?.toISOString() !==
-      new Date(selectedTask.dueDate).toISOString();
-
+    const dueDateChanged = formData.dueDate?.toISOString() !== originalDueDate;
     const today = new Date();
 
     today.setHours(0, 0, 0, 0);
@@ -189,16 +196,6 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
 
       return;
     }
-
-    // SUCCESS / NO CHANGES
-
-    // navigate("/tasks");
-
-    // if (from === "details") {
-    //   await dispatch(fetchTaskById(id));
-    // } else {
-    //   navigate("/tasks");
-    // }
 
     await dispatch(fetchTaskById(id));
     onClose();
@@ -354,7 +351,20 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
               <CloseIcon sx={{ fontSize: "20px" }} />
             </IconButton>
           </Box>
-
+          {canEditStatusOnly && (
+            <Typography
+              sx={{
+                fontSize: "0.85rem",
+                color: "#92400e",
+                background: "#fef3c7",
+                p: 1.5,
+                borderRadius: "8px",
+                mb: 2,
+              }}
+            >
+              This task was assigned by a manager. Only status can be updated.
+            </Typography>
+          )}{" "}
           {/* BODY */}
           <Box
             sx={{
@@ -367,7 +377,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
             }}
           >
             {/* TASK TITLE */}
-            {!isEmployee && (
+            {canFullyEdit && (
               <Box>
                 <LabelText>Task Title</LabelText>
                 <TextField
@@ -384,7 +394,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
 
             {/* STATUS & PRIORITY ROW */}
             <Box sx={{ display: "flex", gap: 2 }}>
-              {!isEmployee && (
+              {canFullyEdit && (
                 <Box sx={{ flex: 1 }}>
                   <LabelText>Priority</LabelText>
 
@@ -490,7 +500,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
             </Box>
 
             {/*  ASSIGNED TO  */}
-            {!isEmployee && (
+            {user?.role === "manager" && (
               <Box>
                 <LabelText>Assign To</LabelText>
 
@@ -602,7 +612,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
             )}
 
             {/* DUE DATE */}
-            {!isEmployee && (
+            {canFullyEdit && (
               <Box>
                 <LabelText>Due Date</LabelText>
                 <DatePicker
@@ -624,7 +634,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
             )}
 
             {/* DESCRIPTION */}
-            {!isEmployee && (
+            {canFullyEdit && (
               <Box>
                 <LabelText>Description</LabelText>
                 <TextField
@@ -640,7 +650,6 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
               </Box>
             )}
           </Box>
-
           {/* FOOTER */}
           <Box
             sx={{

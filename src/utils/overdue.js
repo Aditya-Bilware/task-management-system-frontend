@@ -5,5 +5,9 @@ export const isTaskOverdue = (task) => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  return dueDate < today && !["done", "rejected"].includes(task.status);
+  return (
+    dueDate < today &&
+    !["done", "rejected"].includes(task.status) &&
+    task.dueDate !== null
+  );
 };

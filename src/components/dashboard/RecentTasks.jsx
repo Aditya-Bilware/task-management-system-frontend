@@ -7,6 +7,7 @@ import RecentTaskTableSkeleton from "../skeletons/dashboard/RecentTasksSkeleton"
 import { getPriorityColor } from "../../utils/priority";
 import { getStatusColor } from "../../utils/status";
 import { isTaskOverdue } from "../../utils/overdue";
+import { formatDate } from "../../utils/formatdate";
 
 const RecentTaskTable = () => {
   const dispatch = useDispatch();
@@ -17,12 +18,12 @@ const RecentTaskTable = () => {
   const tableHeaders =
     user?.role === "manager"
       ? ["Task Title", "Priority", "Status", "Assigned To", "Due Date"]
-      : ["Task Title", "Priority", "Status", "Due Date"];
+      : ["Task Title", "Priority", "Status", "Created By", "Due Date"];
 
   const tableColumns =
     user?.role === "manager"
       ? "1.87fr 1fr 1.5fr 1fr 1fr"
-      : "2fr 1fr 1.8fr  1fr";
+      : "1.87fr 1fr 1.5fr 1fr 1fr";
   const { recentTasks, recentTasksLoading, recentTasksError } = useSelector(
     (state) => state.dashboard,
   );
@@ -177,7 +178,7 @@ const RecentTaskTable = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: user?.role === "manager" ? 3 : 7,
+                gap: 3,
                 flexWrap: "wrap",
               }}
             >
@@ -230,7 +231,7 @@ const RecentTaskTable = () => {
                       zIndex: 1,
                       display: "flex",
                       alignItems: "center",
-                      gap: 2,
+                      // gap: 2,
                       px: 1.3,
                       height: 28,
                       borderRadius: "100px",
@@ -259,6 +260,18 @@ const RecentTaskTable = () => {
               </Typography>
             )}
 
+            {user?.role === "employee" && (
+              <Typography
+                sx={{
+                  fontSize: "0.88rem",
+                  color: "#374151",
+                  fontWeight: 600,
+                }}
+              >
+                {task.createdBy?.name || "-"}
+              </Typography>
+            )}
+
             <Typography
               sx={{
                 fontSize: "0.86rem",
@@ -266,11 +279,7 @@ const RecentTaskTable = () => {
                 color: "#475569",
               }}
             >
-              {new Date(task?.dueDate).toLocaleString("en-IN", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-              })}
+              {formatDate(task?.dueDate)}
             </Typography>
           </Box>
         );

@@ -19,6 +19,7 @@ import TaskDetailsSkeleton from "../../components/skeletons/tasks/TaskDetailsSke
 import { getPriorityColor } from "../../utils/priority";
 import { getStatusColor } from "../../utils/status";
 import { isTaskOverdue } from "../../utils/overdue";
+import { formatDate } from "../../utils/formatdate";
 const TaskDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -424,11 +425,7 @@ const TaskDetails = () => {
                     fontWeight: 700,
                   }}
                 >
-                  {new Date(selectedTask?.dueDate).toLocaleString("en-IN", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  })}
+                  {formatDate(selectedTask?.dueDate)}
                 </Typography>
               </Box>
             </Box>

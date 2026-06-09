@@ -46,6 +46,8 @@ import SingleRowSkeleton from "../skeletons/tasks/SingleRowSkeleton";
 import DeleteTaskModal from "../../pages/tasks/DeleteTaskModal";
 import { resetTaskFilters } from "../../features/tasks/taskSlice";
 import { fetchEmployees } from "../../features/users/employeeSlice";
+import { formatDate } from "../../utils/formatdate";
+import { isTaskOverdue } from "../../utils/overdue";
 const TaskTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,8 +74,8 @@ const TaskTable = () => {
 
   const tableColumns =
     user?.role === "manager"
-      ? "2.2fr 1fr 2fr 1.2fr 1.2fr 1fr"
-      : "2.3fr 1fr 1.4fr 1fr 1fr";
+      ? "2.2fr 1fr 1.8fr 1.2fr 1.2fr 1fr"
+      : "2.4fr 1.2fr 2fr 1.2fr 1.2fr 1fr";
 
   const tableHeaders =
     user?.role === "manager"
@@ -85,7 +87,14 @@ const TaskTable = () => {
           "Due Date",
           "Actions",
         ]
-      : ["Task Title", "Priority", "Status", "Due Date", "Actions"];
+      : [
+          "Task Title",
+          "Priority",
+          "Status",
+          "Created By",
+          "Due Date",
+          "Actions",
+        ];
 
   const { employees } = useSelector((state) => state.employee);
 
@@ -211,7 +220,8 @@ const TaskTable = () => {
       ? tasks.filter(
           (task) =>
             new Date(task.dueDate) < new Date() &&
-            !["done", "rejected"].includes(task.status),
+            !["done", "rejected"].includes(task.status) &&
+            task.dueDate !== null,
         )
       : tasks;
 
@@ -264,7 +274,7 @@ const TaskTable = () => {
         </Box>
 
         {/* RIGHT */}
-        {user?.role === "manager" && (
+        {(user?.role === "manager" || user?.role === "employee") && (
           <Button
             onClick={() => navigate(`/tasks/create`)}
             variant="contained"
@@ -461,7 +471,7 @@ const TaskTable = () => {
             display: "grid",
             gridTemplateColumns: tableColumns,
             minWidth: "900px",
-            px: 3,
+            px: 4,
             py: 1.8,
             backgroundColor: "#f8fafc",
             borderBottom: "1px solid #eef2f7",
@@ -503,9 +513,7 @@ const TaskTable = () => {
 
             const status = getStatusColor(task.status);
 
-            const isOverDue =
-              new Date(task.dueDate) < new Date() &&
-              !["done", "rejected"].includes(task.status);
+            const isOverDue = isTaskOverdue(task);
 
             if (updatingTaskId === task._id) {
               return <SingleRowSkeleton key={index} />;
@@ -669,6 +677,18 @@ const TaskTable = () => {
                   </Typography>
                 )}
 
+                {user?.role === "employee" && (
+                  <Typography
+                    sx={{
+                      fontSize: "0.88rem",
+                      color: "#374151",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {task.createdBy?.name || "-"}
+                  </Typography>
+                )}
+
                 {/* DUE DATE */}
                 <Typography
                   sx={{
@@ -677,11 +697,7 @@ const TaskTable = () => {
                     color: "#475569",
                   }}
                 >
-                  {new Date(task?.dueDate).toLocaleString("en-IN", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                  })}{" "}
+                  {formatDate(task?.dueDate)}
                 </Typography>
 
                 {/* ACTIONS */}
@@ -730,7 +746,9 @@ const TaskTable = () => {
                   </Tooltip>
 
                   {/* DELETE */}
-                  {user?.role === "manager" && (
+                  {(user?.role === "manager" ||
+                    (user?.role === "employee" &&
+                      task.createdBy?._id === user._id)) && (
                     <Tooltip title="Delete Task" arrow>
                       <IconButton
                         size="small"
@@ -739,7 +757,6 @@ const TaskTable = () => {
                         }}
                         sx={{
                           color: "#dc2626",
-
                           "&:hover": {
                             backgroundColor: "#fef2f2",
                           },
