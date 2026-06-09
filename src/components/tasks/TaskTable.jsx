@@ -483,7 +483,7 @@ const TaskTable = () => {
             <Typography
               key={head}
               sx={{
-                fontSize: "0.9rem",
+                fontSize: "1.5rem",
                 fontWeight: 900,
                 color: "#374151",
               }}
