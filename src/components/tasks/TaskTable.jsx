@@ -185,8 +185,10 @@ const TaskTable = () => {
   }, [assignedEmployeeFromState, statusFromState, priorityFromState, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchEmployees());
-  }, [dispatch]);
+    if (user?.role === "manager") {
+      dispatch(fetchEmployees());
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     dispatch(fetchTasks());

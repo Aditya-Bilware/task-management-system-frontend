@@ -126,8 +126,10 @@ const CreateTask = () => {
       : formData.title.trim() && formData.priority;
 
   useEffect(() => {
-    dispatch(fetchEmployees());
-  }, [dispatch]);
+    if (user?.role === "manager") {
+      dispatch(fetchEmployees());
+    }
+  }, [dispatch, user]);
 
   if (employeesLoading) return <CreateTaskSkeleton />;
 

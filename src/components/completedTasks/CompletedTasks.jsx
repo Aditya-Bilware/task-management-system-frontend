@@ -133,8 +133,10 @@ const CompletedTasks = () => {
   }, [searchInput, filters.search, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchEmployees());
-  }, [dispatch]);
+    if (user?.role === "manager") {
+      dispatch(fetchEmployees());
+    }
+  }, [dispatch, user]);
 
   // RESET FILTERS
 
