@@ -45,11 +45,6 @@ const LabelText = ({ children }) => (
 );
 
 const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
-  // const navigate = useNavigate();
-
-  // const { id } = useParams();
-  // const location = useLocation();
-
   const id = taskId;
 
   // const from = location.state?.from || "table";
@@ -60,8 +55,6 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
   const { employees } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.auth);
   const { enqueueSnackbar } = useSnackbar();
-
-  const isEmployee = user?.role === "employee";
 
   const isSelfCreated = selectedTask?.createdBy?._id === user?._id;
 
@@ -95,12 +88,14 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
   useEffect(() => {
     if (!open) return;
 
-    dispatch(fetchEmployees());
+    if (user?.role === "manager") {
+      dispatch(fetchEmployees());
+    }
 
     if (shouldFetchTask && id) {
       dispatch(fetchTaskById(id));
     }
-  }, [open, id, shouldFetchTask, dispatch]);
+  }, [open, id, user, shouldFetchTask, dispatch]);
 
   useEffect(() => {
     if (!selectedTask) {
@@ -136,7 +131,9 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
         return;
       }
 
-      payload.status = formData.status;
+      payload = {
+        status: formData.status,
+      };
     } else {
       payload = {};
 
