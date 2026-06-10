@@ -18,7 +18,7 @@ const StatsCards = () => {
   const { stats, statsLoading, statsError } = useSelector(
     (state) => state.dashboard,
   );
-  console.log(stats);
+  // console.log(stats);
 
   //fetch stats
   useEffect(() => {

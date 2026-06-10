@@ -219,7 +219,7 @@ const taskSlice = createSlice({
       })
       .addCase(createTask.fulfilled, (state, action) => {
         state.createTaskLoading = false;
-        console.log(action.payload);
+        // console.log(action.payload);
         state.tasks.unshift(action.payload.task);
       })
       .addCase(createTask.rejected, (state) => {

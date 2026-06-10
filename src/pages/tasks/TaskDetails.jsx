@@ -36,10 +36,6 @@ const TaskDetails = () => {
     }
   }, [dispatch, id]);
 
-  console.log("selectedTaskLoading", selectedTaskLoading);
-  console.log("selectedTask", selectedTask);
-  console.log("selectedTaskError", selectedTaskError);
-
   if (selectedTaskLoading) {
     return <TaskDetailsSkeleton />;
   }
