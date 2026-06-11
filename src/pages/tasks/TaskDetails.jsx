@@ -28,7 +28,16 @@ const TaskDetails = () => {
     (state) => state.tasks,
   );
 
+  const { user } = useSelector((state) => state.auth);
+
   const [editOpen, setEditOpen] = useState(false);
+
+  const isEmpCreated = selectedTask?.createdBy._id === user?._id;
+
+  const showEditButton = () =>
+    user?.role === "manager" ||
+    isEmpCreated ||
+    !["done", "rejected"].includes(selectedTask?.status);
 
   useEffect(() => {
     if (id) {
@@ -99,24 +108,26 @@ const TaskDetails = () => {
         </Box>
 
         {/* RIGHT */}
-        <Button
-          onClick={() => setEditOpen(true)}
-          variant="contained"
-          sx={{
-            textTransform: "none",
-            borderRadius: "10px",
-            px: 2.5,
-            py: 1,
-            fontWeight: 600,
-            boxShadow: "none",
-            width: {
-              xs: "100%",
-              sm: "auto",
-            },
-          }}
-        >
-          Edit Task
-        </Button>
+        {showEditButton() && (
+          <Button
+            onClick={() => setEditOpen(true)}
+            variant="contained"
+            sx={{
+              textTransform: "none",
+              borderRadius: "10px",
+              px: 2.5,
+              py: 1,
+              fontWeight: 600,
+              boxShadow: "none",
+              width: {
+                xs: "100%",
+                sm: "auto",
+              },
+            }}
+          >
+            Edit Task
+          </Button>
+        )}
       </Box>
       {/* Main Card */}
       <Card

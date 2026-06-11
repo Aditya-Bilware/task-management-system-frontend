@@ -32,10 +32,22 @@ const Navbar = ({ setProfileOpen }) => {
   const open = Boolean(anchor);
 
   const getTitle = (path) => {
+    const titles = {
+      "/dashboard": "Dashboard",
+      "/tasks/:id": "Task Details",
+      "/tasks/create": "Create Task",
+      "/tasksHistory": "Task History",
+    };
+
+    if (titles[path]) {
+      return titles[path];
+    }
+
+    if (path.startsWith("/tasks/") && path !== "/tasks/create") {
+      return "Task Details";
+    }
     const segment = path.split("/")[1];
-    if (!segment || segment === "dashboard") return "Dashboard";
-    if (segment === "tasks") return "Task";
-    if (segment === "completed") return "Task History";
+
     return (
       segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ")
     );

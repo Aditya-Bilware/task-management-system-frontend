@@ -63,9 +63,9 @@ const StatsCards = () => {
         }),
     },
     {
-      title: "In Progress",
+      title: "Active Task",
       value: stats?.activeTasks || 0,
-      subtitle: "Active tasks",
+      subtitle: "In-progress & Next",
       icon: <AutorenewOutlinedIcon />,
       color: "#7c3aed",
       bg: "#ede9fe",
@@ -116,7 +116,7 @@ const StatsCards = () => {
             sx={{
               borderRadius: "14px",
               border: "1px solid #eef2f7",
-              p: 2.5,
+              p: 2,
               backgroundColor: "#fff",
 
               transition: "all 1s ease",

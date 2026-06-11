@@ -8,7 +8,7 @@ import MainLayout from "../layout/MainLayout";
 import TaskDetails from "../pages/tasks/TaskDetails";
 import CreateTask from "/src/pages/tasks/CreateTask.jsx";
 import Employee from "../components/employees/Employees";
-import CompletedTasks from "../components/completedTasks/CompletedTasks";
+import TaskHistory from "../components/taskHistory/TaskHistory";
 import ScrollToTop from "../components/common/ScrollToTop";
 
 const AppRoutes = () => {
@@ -35,7 +35,7 @@ const AppRoutes = () => {
           <Route path="/tasks/:id/delete" element={<Tasks />} />
           <Route path="/tasks/create" element={<CreateTask />} />
           <Route path="/employees" element={<Employee />} />
-          <Route path="/completed" element={<CompletedTasks />} />
+          <Route path="/tasksHistory" element={<TaskHistory />} />
         </Route>
 
         {/* Not Found */}

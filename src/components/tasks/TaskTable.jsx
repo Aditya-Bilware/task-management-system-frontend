@@ -271,7 +271,7 @@ const TaskTable = () => {
               color: "#111827",
             }}
           >
-            Tasks
+            Task List
           </Typography>
         </Box>
 

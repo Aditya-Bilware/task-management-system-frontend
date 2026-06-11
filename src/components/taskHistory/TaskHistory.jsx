@@ -28,9 +28,9 @@ import {
   setSearch,
   setAssignedTo,
 } from "../../features/tasks/taskHistorySlice";
-import CompletedTasksSkeleton from "../skeletons/completedTasks/CompletedTasksSkeleton";
+import TasksHistoryRowSkeleton from "../skeletons/taskHistory/TasksHistorySkeleton";
 import { getPriorityColor } from "../../utils/priority";
-import CompletedTasksRowSkeleton from "../skeletons/completedTasks/CompletedTasksRowSkeleton ";
+import TasksHistorySkeleton from "../skeletons/taskHistory/TasksHistorySkeleton";
 import { fetchEmployees } from "../../features/users/employeeSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -62,7 +62,7 @@ const getStatusStyles = (status) => {
   }
 };
 
-const CompletedTasks = () => {
+const TaskHistory = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -158,7 +158,7 @@ const CompletedTasks = () => {
   // INITIAL LOADING
 
   if (initialLoading) {
-    return <CompletedTasksSkeleton />;
+    return <TasksHistorySkeleton />;
   }
 
   if (historyTasksError) {
@@ -443,7 +443,7 @@ const CompletedTasks = () => {
             </Typography>
           </Box>
         ) : historyTasksLoading && loadingType === "page" ? (
-          <CompletedTasksRowSkeleton />
+          <TasksHistoryRowSkeleton />
         ) : (
           historyTasks.map((task, index) => {
             const priorityStyles = getPriorityColor(task.priority);
@@ -644,4 +644,4 @@ const CompletedTasks = () => {
   );
 };
 
-export default CompletedTasks;
+export default TaskHistory;

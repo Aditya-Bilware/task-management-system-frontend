@@ -64,7 +64,7 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
     {
       text: "Task History",
       icon: <ChecklistOutlinedIcon />,
-      path: "/completed",
+      path: "/tasksHistory",
     },
   ];
 
@@ -88,7 +88,7 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
     {
       text: "Task History",
       icon: <ChecklistOutlinedIcon />,
-      path: "/completed",
+      path: "/tasksHistory",
     },
   ];
 

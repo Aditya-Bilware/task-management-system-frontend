@@ -84,7 +84,7 @@ const LoginPage = () => {
           borderRadius: "20px",
           overflow: "hidden",
           boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
-          backgroundImage: `url("./LoginImg.png")`,
+          backgroundImage: `url("./LoginImage.png")`,
           backgroundSize: "cover",
           backgroundPosition: "right center",
         }}
@@ -94,7 +94,7 @@ const LoginPage = () => {
           elevation={12}
           sx={{
             position: "absolute",
-            // Floating offset positions to suspend it in mid-air
+            // Floating
             left: { xs: "0", md: "24px" },
             top: { xs: "0", md: "24px" },
             height: { xs: "100%", md: "calc(100% - 48px)" },
@@ -106,13 +106,11 @@ const LoginPage = () => {
 
             px: 4,
             background: "rgba(255, 255, 255, 0.92)",
-            backdropFilter: "blur(12px)", // Soft glassmorphism depth effect
+            backdropFilter: "blur(12px)",
 
-            // Fully rounded container corners to break away from the container edge
             borderRadius: { xs: "0px", md: "16px" },
             boxShadow: "0 15px 35px rgba(0, 0, 0, 0.1)",
 
-            // Smooth entrance animation for initial load visual engagement
             animation: "floatUp 0.6s ease-out forwards",
             "@keyframes floatUp": {
               "0%": { transform: "translateY(15px)", opacity: 0 },
@@ -120,7 +118,6 @@ const LoginPage = () => {
             },
           }}
         >
-          {/* Logo */}
           {/* Logo + Branding */}
           <Box
             sx={{
@@ -132,7 +129,7 @@ const LoginPage = () => {
             }}
           >
             <Avatar
-              src={"./logo.jpg"}
+              // src={"./logo.jpg"}
               sx={{
                 width: 68,
                 height: 68,
@@ -148,10 +145,12 @@ const LoginPage = () => {
                 fontWeight: 500,
                 mb: 2,
                 letterSpacing: "0.2px",
-                textDecoration: "underline",
+                // textDecoration: "underline",
+                textDecoration: "underline gray 1px",
               }}
             >
-              \Orchestrating a brighter world
+              {/* \Orchestrating a brighter world */}
+              \From to-do to done, effortlessly
             </Typography>
 
             <Typography

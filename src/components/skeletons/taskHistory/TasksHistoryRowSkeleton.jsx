@@ -1,6 +1,6 @@
 import { Box, Skeleton } from "@mui/material";
 
-const CompletedTasksRowSkeleton = () => {
+const TasksHistoryRowSkeleton = () => {
   return (
     <>
       {Array.from({
@@ -98,4 +98,4 @@ const CompletedTasksRowSkeleton = () => {
   );
 };
 
-export default CompletedTasksRowSkeleton;
+export default TasksHistoryRowSkeleton;
