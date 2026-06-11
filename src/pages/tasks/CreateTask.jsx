@@ -9,6 +9,7 @@ import {
   Avatar,
   Autocomplete,
   Divider,
+  Tooltip,
 } from "@mui/material";
 
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -39,14 +40,14 @@ const priorities = [
   "unassigned",
 ];
 
-// const statuses = [
-//   "in-progress",
-//   "next",
-//   "on-hold",
-//   "done",
-//   "backlog",
-//   "rejected",
-// ];
+const statuses = [
+  "in-progress",
+  "next",
+  "on-hold",
+  "done",
+  "backlog",
+  "rejected",
+];
 
 const enterpriseInputStyles = {
   "& .MuiOutlinedInput-root": {
@@ -343,7 +344,7 @@ const CreateTask = () => {
                       name="priority"
                       value={formData.priority}
                       onChange={handleChange}
-                      placeholder="Select priority"
+                      // placeholder="Select priority"
                       sx={enterpriseInputStyles}
                     >
                       {priorities.map((priority) => (
@@ -373,32 +374,38 @@ const CreateTask = () => {
 
                   <Box>
                     <LabelText>Status</LabelText>
-
-                    <Box
-                      sx={{
-                        height: 56,
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "14px",
-                        px: 2,
-                        display: "flex",
-                        alignItems: "center",
-                        background: "#fff",
-                      }}
+                    <TextField
+                      select
+                      fullWidth
+                      name="status"
+                      value={formData.status}
+                      onChange={handleChange}
+                      // placeholder="Select status"
+                      sx={enterpriseInputStyles}
                     >
-                      <Box
-                        sx={{
-                          px: 1.4,
-                          py: 0.5,
-                          borderRadius: "8px",
-                          fontSize: "0.9rem",
-                          fontWeight: 900,
-                          textTransform: "capitalize",
-                          ...getStatusColor("next"),
-                        }}
-                      >
-                        Next
-                      </Box>
-                    </Box>
+                      {statuses.map((status) => (
+                        <MenuItem key={status} value={status}>
+                          <Box
+                            sx={{
+                              px: 1.4,
+                              py: 0.5,
+
+                              borderRadius: "8px",
+
+                              fontSize: "0.9rem",
+
+                              fontWeight: 900,
+
+                              textTransform: "capitalize",
+
+                              ...getStatusColor(status),
+                            }}
+                          >
+                            {status}
+                          </Box>
+                        </MenuItem>
+                      ))}
+                    </TextField>
                   </Box>
                 </Box>
 
@@ -529,36 +536,44 @@ const CreateTask = () => {
                     gap: 1.5,
                   }}
                 >
-                  <Button
-                    variant="contained"
-                    onClick={handleSubmit}
-                    disabled={!isFormValid || createTaskLoading}
-                    sx={{
-                      borderRadius: "12px",
-
-                      textTransform: "none",
-
-                      px: 4,
-
-                      py: 1,
-                      height: 48,
-
-                      fontWeight: 700,
-                      fontSize: "0.92rem",
-                      letterSpacing: "0.01em",
-                      boxShadow: "none",
-
-                      background: "#2563eb",
-
-                      "&:hover": {
-                        background: "#1d4ed8",
-
-                        boxShadow: "none",
-                      },
-                    }}
+                  <Tooltip
+                    title={!isFormValid ? "Fill required fields first" : ""}
+                    arrow
                   >
-                    {createTaskLoading ? "Creating" : "Create Task"}
-                  </Button>
+                    <span>
+                      <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        title={!isFormValid && "Fill required fields first"}
+                        disabled={!isFormValid || createTaskLoading}
+                        sx={{
+                          borderRadius: "12px",
+
+                          textTransform: "none",
+
+                          px: 4,
+
+                          py: 1,
+                          height: 48,
+
+                          fontWeight: 700,
+                          fontSize: "0.92rem",
+                          letterSpacing: "0.01em",
+                          boxShadow: "none",
+
+                          background: "#2563eb",
+
+                          "&:hover": {
+                            background: "#1d4ed8",
+
+                            boxShadow: "none",
+                          },
+                        }}
+                      >
+                        {createTaskLoading ? "Creating" : "Create Task"}
+                      </Button>
+                    </span>
+                  </Tooltip>
                 </Box>
               </Stack>
             </Box>
