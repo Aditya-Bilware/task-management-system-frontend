@@ -28,7 +28,7 @@ import {
   setSearch,
   setAssignedTo,
 } from "../../features/tasks/taskHistorySlice";
-import TasksHistoryRowSkeleton from "../skeletons/taskHistory/TasksHistorySkeleton";
+import TasksHistoryRowSkeleton from "../skeletons/taskHistory/TasksHistoryRowSkeleton";
 import { getPriorityColor } from "../../utils/priority";
 import TasksHistorySkeleton from "../skeletons/taskHistory/TasksHistorySkeleton";
 import { fetchEmployees } from "../../features/users/employeeSlice";
