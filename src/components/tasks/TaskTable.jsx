@@ -219,6 +219,14 @@ const TaskTable = () => {
 
   const filteredTasks = tasks;
 
+  console.log(
+    filteredTasks.map((task) => ({
+      title: task.title,
+      dueDate: task.dueDate,
+      status: task.status,
+    })),
+  );
+
   return (
     <Box
       sx={{
