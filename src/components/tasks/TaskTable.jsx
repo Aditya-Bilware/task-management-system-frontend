@@ -219,12 +219,7 @@ const TaskTable = () => {
 
   const filteredTasks =
     filters.status === "overdue"
-      ? tasks.filter(
-          (task) =>
-            new Date(task.dueDate) < new Date() &&
-            !["done", "rejected"].includes(task.status) &&
-            task.dueDate !== null,
-        )
+      ? tasks.filter((task) => isTaskOverdue(task))
       : tasks;
 
   return (
