@@ -156,24 +156,24 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
 
     // frontend due date validation
 
-    const dueDateChanged = formData.dueDate?.toISOString() !== originalDueDate;
-    const today = new Date();
+    // const dueDateChanged = formData.dueDate?.toISOString() !== originalDueDate;
+    // const today = new Date();
 
-    today.setHours(0, 0, 0, 0);
+    // today.setHours(0, 0, 0, 0);
 
-    const selectedDate = formData.dueDate ? new Date(formData.dueDate) : null;
+    // const selectedDate = formData.dueDate ? new Date(formData.dueDate) : null;
 
-    if (dueDateChanged && selectedDate) {
-      selectedDate.setHours(0, 0, 0, 0);
+    // if (dueDateChanged && selectedDate) {
+    //   selectedDate.setHours(0, 0, 0, 0);
 
-      if (selectedDate < today) {
-        enqueueSnackbar("Due date can not be in the past", {
-          variant: "error",
-        });
+    //   if (selectedDate < today) {
+    //     enqueueSnackbar("Due date cannot be in the past", {
+    //       variant: "error",
+    //     });
 
-        return;
-      }
-    }
+    //     return;
+    //   }
+    // }
 
     // backend call
 
