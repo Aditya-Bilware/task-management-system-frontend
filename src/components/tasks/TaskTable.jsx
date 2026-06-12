@@ -217,10 +217,7 @@ const TaskTable = () => {
     return <Typography color="error">{tasksError}</Typography>;
   }
 
-  const filteredTasks =
-    filters.status === "overdue"
-      ? tasks.filter((task) => isTaskOverdue(task))
-      : tasks;
+  const filteredTasks = tasks;
 
   return (
     <Box
