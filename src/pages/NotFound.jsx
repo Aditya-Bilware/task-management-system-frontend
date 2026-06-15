@@ -142,8 +142,9 @@ const NotFound = () => {
           justifyContent="center"
           sx={{
             mt: 4,
-            display: "flex",
-            alignItems: "center",
+            width: "100%",
+            maxWidth: 450,
+            mx: "auto",
           }}
         >
           <Button
