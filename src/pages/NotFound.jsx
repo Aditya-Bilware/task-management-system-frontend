@@ -133,7 +133,7 @@ const NotFound = () => {
         </Box>
 
         {/* Actions */}
-        <Stack
+        <Box
           direction={{
             xs: "column",
             sm: "row",
@@ -142,9 +142,8 @@ const NotFound = () => {
           justifyContent="center"
           sx={{
             mt: 4,
-            width: "100%",
-            maxWidth: 450,
-            mx: "auto",
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <Button
@@ -177,7 +176,7 @@ const NotFound = () => {
           >
             Go Back
           </Button>
-        </Stack>
+        </Box>
 
         {/* Footer Note */}
         <Typography
