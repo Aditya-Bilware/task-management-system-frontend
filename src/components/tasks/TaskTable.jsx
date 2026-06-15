@@ -492,8 +492,8 @@ const TaskTable = () => {
           <EmptyState
             title={
               filters.search || filters.priority || filters.status
-                ? "No matching tasks found"
-                : "No tasks available"
+                ? "No Matching Tasks found"
+                : "No Tasks Available"
             }
             subtitle={
               filters.search || filters.priority || filters.status

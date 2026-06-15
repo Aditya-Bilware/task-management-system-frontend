@@ -414,42 +414,27 @@ const TaskHistory = () => {
 
         {/* EMPTY STATE */}
 
-        {!historyTasks?.length && (
+        {/* {!historyTasks?.length && (
           <Card>
             <EmptyState title="No Recent Tasks"></EmptyState>
           </Card>
-        )}
+        )} */}
 
-        {!historyTasksLoading && historyTasks.length === 0 ? (
-          <Box
-            sx={{
-              minHeight: "350px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "column",
-            }}
-          >
-            <Typography
-              sx={{
-                fontSize: "1rem",
-                fontWeight: 700,
-                color: "#0f172a",
-              }}
-            >
-              No history tasks found
-            </Typography>
-
-            <Typography
-              sx={{
-                mt: 1,
-                fontSize: "0.9rem",
-                color: "#64748b",
-              }}
-            >
-              Try changing filters or search
-            </Typography>
-          </Box>
+        {historyTasksLoading ? (
+          <TasksHistorySkeleton />
+        ) : !historyTasks?.length ? (
+          <EmptyState
+            title={
+              filters.search || filters.status || filters.assignedTo
+                ? "No Matching History Found"
+                : "No Task History Available"
+            }
+            subtitle={
+              filters.search || filters.status || filters.assignedTo
+                ? "Try adjusting your search or filters."
+                : "Completed, rejected, and deleted tasks will appear here."
+            }
+          />
         ) : historyTasksLoading && loadingType === "page" ? (
           <TasksHistoryRowSkeleton />
         ) : (
