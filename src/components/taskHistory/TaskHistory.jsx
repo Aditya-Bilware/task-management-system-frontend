@@ -34,6 +34,8 @@ import TasksHistorySkeleton from "../skeletons/taskHistory/TasksHistorySkeleton"
 import { fetchEmployees } from "../../features/users/employeeSlice";
 import { useNavigate } from "react-router-dom";
 
+import EmptyState from "../common/EmptyState";
+
 const getStatusStyles = (status) => {
   switch (status) {
     case "completed":
@@ -411,6 +413,12 @@ const TaskHistory = () => {
         </Box>
 
         {/* EMPTY STATE */}
+
+        {!historyTasks?.length && (
+          <Card>
+            <EmptyState title="No Recent Tasks"></EmptyState>
+          </Card>
+        )}
 
         {!historyTasksLoading && historyTasks.length === 0 ? (
           <Box
