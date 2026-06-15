@@ -412,9 +412,7 @@ const TaskHistory = () => {
           ))}
         </Box>
 
-        {historyTasksLoading ? (
-          <TasksHistorySkeleton />
-        ) : !historyTasks?.length ? (
+        {!historyTasks?.length ? (
           <EmptyState
             title={
               filters.search ||
