@@ -9,6 +9,8 @@ import { getStatusColor } from "../../utils/status";
 import { isTaskOverdue } from "../../utils/overdue";
 import { formatDate } from "../../utils/formatdate";
 
+import EmptyState from "../common/EmptyState";
+
 const RecentTaskTable = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -39,6 +41,17 @@ const RecentTaskTable = () => {
 
   if (recentTasksError) {
     return <Typography color="error">{recentTasksError}</Typography>;
+  }
+
+  if (!recentTasks?.length) {
+    return (
+      <Card>
+        <EmptyState
+          title="No Recent Tasks"
+          subtitle="Recently created or updated tasks will appear here."
+        ></EmptyState>
+      </Card>
+    );
   }
 
   return (
