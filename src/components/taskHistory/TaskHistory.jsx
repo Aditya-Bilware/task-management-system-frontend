@@ -412,14 +412,6 @@ const TaskHistory = () => {
           ))}
         </Box>
 
-        {/* EMPTY STATE */}
-
-        {/* {!historyTasks?.length && (
-          <Card>
-            <EmptyState title="No Recent Tasks"></EmptyState>
-          </Card>
-        )} */}
-
         {historyTasksLoading ? (
           <TasksHistorySkeleton />
         ) : !historyTasks?.length ? (

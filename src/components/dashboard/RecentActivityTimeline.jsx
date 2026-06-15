@@ -164,11 +164,8 @@ const renderActivityText = (activity) => {
 const RecentActivityTimeline = () => {
   const dispatch = useDispatch();
 
-  const {
-    recentActivities,
-
-    recentActivitiesError,
-  } = useSelector((state) => state.dashboard);
+  const { recentActivities, recentActivitiesLoading, recentActivitiesError } =
+    useSelector((state) => state.dashboard);
 
   useEffect(() => {
     dispatch(fetchRecentActivities());
@@ -218,7 +215,7 @@ const RecentActivityTimeline = () => {
         </Typography>
       </Box>
 
-      {!recentActivities?.length && (
+      {!recentActivities?.length && recentActivitiesLoading && (
         <Card>
           <EmptyState
             title="No Recent Activity"
