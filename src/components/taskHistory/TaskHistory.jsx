@@ -422,7 +422,9 @@ const TaskHistory = () => {
                 : "No Task History Available"
             }
             subtitle={
-              filters.search || filters.status || filters.assignedTo
+              filters.search ||
+              filters.filter !== "all-history" ||
+              filters.assignedTo
                 ? "Try adjusting your search or filters."
                 : "Completed, rejected, and deleted tasks will appear here."
             }
