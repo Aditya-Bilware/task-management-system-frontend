@@ -215,7 +215,7 @@ const RecentActivityTimeline = () => {
         </Typography>
       </Box>
 
-      {!recentActivities?.length && recentActivitiesLoading && (
+      {!recentActivities?.length && !recentActivitiesLoading && (
         <Card>
           <EmptyState
             title="No Recent Activity"
