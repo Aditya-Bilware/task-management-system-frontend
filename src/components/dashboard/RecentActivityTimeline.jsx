@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchRecentActivities } from "../../features/dashboard/dashboardSlice";
+import EmptyState from "../common/EmptyState";
 
 const getActivityColor = (field) => {
   switch (field) {
@@ -217,25 +218,15 @@ const RecentActivityTimeline = () => {
         </Typography>
       </Box>
 
-      {!recentActivities && recentActivities.length === 0 && (
-        <Box
-          sx={{
-            p: 4,
-
-            textAlign: "center",
-          }}
-        >
-          <Typography
-            sx={{
-              color: "#94a3b8",
-
-              fontSize: "0.9rem",
-            }}
-          >
-            No activity found
-          </Typography>
-        </Box>
+      {!recentActivities?.length && (
+        <Card>
+          <EmptyState
+            title="No Recent Activity"
+            subtitle="Recent activity related to task creation, updates, and all changes will appear here."
+          ></EmptyState>
+        </Card>
       )}
+
       {/* ACTIVITIES */}
       <Box sx={{ p: 3 }}>
         {recentActivities?.map((activity, index) => (

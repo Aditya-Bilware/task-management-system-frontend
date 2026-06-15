@@ -37,7 +37,7 @@ const StatsCards = () => {
     {
       title: "Total Tasks",
       value: stats?.totalTasks || 0,
-      subtitle: "Overall workload",
+      subtitle: "Overall Workload",
       icon: <AssignmentOutlinedIcon />,
       color: "#2563eb",
       bg: "#dbeafe",
@@ -51,7 +51,7 @@ const StatsCards = () => {
     {
       title: "Overdue Tasks",
       value: stats?.overdueTasks || 0,
-      subtitle: "Deadline passed",
+      subtitle: "Deadline Passed",
       icon: <AccessTimeFilledRoundedIcon />,
       color: "#dc2626",
       bg: "#fee2e2",
@@ -93,7 +93,7 @@ const StatsCards = () => {
     {
       title: "Completed",
       value: stats?.completedTasks || 0,
-      subtitle: "Successfully completed",
+      subtitle: "Successfully Completed",
       icon: <CheckCircleOutlineOutlinedIcon />,
       color: "#16a34a",
       bg: "#dcfce7",
