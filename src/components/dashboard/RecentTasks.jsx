@@ -43,17 +43,6 @@ const RecentTaskTable = () => {
     return <Typography color="error">{recentTasksError}</Typography>;
   }
 
-  if (!recentTasks?.length) {
-    return (
-      <Card>
-        <EmptyState
-          title="No Recent Tasks"
-          subtitle="Recently created or updated tasks will appear here."
-        ></EmptyState>
-      </Card>
-    );
-  }
-
   return (
     <Card
       elevation={0}
@@ -125,6 +114,15 @@ const RecentTaskTable = () => {
           </Typography>
         ))}
       </Box>
+
+      {!recentTasks?.length && (
+        <Card>
+          <EmptyState
+            title="No Recent Tasks"
+            subtitle="Recently created or updated tasks will appear here."
+          ></EmptyState>
+        </Card>
+      )}
 
       {/* Rows */}
       {recentTasks?.map((task, index) => {
