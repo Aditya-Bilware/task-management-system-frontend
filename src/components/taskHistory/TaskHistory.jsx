@@ -417,7 +417,9 @@ const TaskHistory = () => {
         ) : !historyTasks?.length ? (
           <EmptyState
             title={
-              filters.search || filters.status || filters.assignedTo
+              filters.search ||
+              filters.filter !== "all-history" ||
+              filters.assignedTo
                 ? "No Matching History Found"
                 : "No Task History Available"
             }
