@@ -13,7 +13,7 @@ const NotFound = () => {
   return (
     <Box
       sx={{
-        minHeight: "100vh",
+        minHeight: "90vh",
         background: "#f8fafc",
         display: "flex",
         justifyContent: "center",
@@ -61,7 +61,7 @@ const NotFound = () => {
         <Typography
           sx={{
             fontSize: {
-              xs: "4rem",
+              xs: "3rem",
               md: "5rem",
             },
             fontWeight: 800,
@@ -142,6 +142,8 @@ const NotFound = () => {
           justifyContent="center"
           sx={{
             mt: 4,
+            display: "flex",
+            alignItems: "center",
           }}
         >
           <Button
