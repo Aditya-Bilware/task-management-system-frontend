@@ -429,7 +429,7 @@ const TaskHistory = () => {
                 : "Completed, rejected, and deleted tasks will appear here."
             }
           />
-        ) : historyTasksLoading && loadingType === "page" ? (
+        ) : historyTasksLoading && loadingType === "pagination" ? (
           <TasksHistoryRowSkeleton />
         ) : (
           historyTasks.map((task, index) => {
