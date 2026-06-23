@@ -35,9 +35,10 @@ const TaskDetails = () => {
   const isEmpCreated = selectedTask?.createdBy._id === user?._id;
 
   const showEditButton = () =>
-    user?.role === "manager" ||
-    isEmpCreated ||
-    !["done", "rejected"].includes(selectedTask?.status);
+    !selectedTask?.isDeleted &&
+    (user?.role === "manager" ||
+      isEmpCreated ||
+      !["done", "rejected"].includes(selectedTask?.status));
 
   useEffect(() => {
     if (id) {
@@ -103,7 +104,7 @@ const TaskDetails = () => {
               color: "#111827",
             }}
           >
-            Task Details
+            {selectedTask?.taskNumber}
           </Typography>
         </Box>
 

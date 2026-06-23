@@ -111,6 +111,8 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
     });
   }, [selectedTask]);
 
+  // console.log("selected task", selectedTask);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -334,7 +336,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                 color: "#0f172a",
               }}
             >
-              Update Task
+              Update Task [{selectedTask?.taskNumber}]
             </Typography>
             <IconButton
               size="small"

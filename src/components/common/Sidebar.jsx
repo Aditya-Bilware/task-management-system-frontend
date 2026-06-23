@@ -27,6 +27,8 @@ import { clearCredentials } from "../../features/auth/authSlice";
 import { resetAppState } from "../../app/appActions";
 import { useRef } from "react";
 import SidebarProfile from "./SidebarProfile";
+import { resetNotifications } from "../../features/notifications/notificationsSlice";
+import { resetOverdueTasks } from "../../features/overdueTasks/overdueTasksSlice";
 
 const drawerWidth = 250;
 
@@ -97,6 +99,8 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
   const handleLogout = () => {
     dispatch(clearCredentials());
     dispatch(resetAppState());
+    dispatch(resetNotifications());
+    dispatch(resetOverdueTasks());
     navigate("/", {
       replace: true,
     });

@@ -19,13 +19,27 @@ const RecentTaskTable = () => {
 
   const tableHeaders =
     user?.role === "manager"
-      ? ["Task Title", "Priority", "Status", "Assigned To", "Due Date"]
-      : ["Task Title", "Priority", "Status", "Created By", "Due Date"];
+      ? [
+          "Task ID",
+          "Task Title",
+          "Priority",
+          "Status",
+          "Assigned To",
+          "Due Date",
+        ]
+      : [
+          "Task ID",
+          "Task Title",
+          "Priority",
+          "Status",
+          "Created By",
+          "Due Date",
+        ];
 
   const tableColumns =
     user?.role === "manager"
-      ? "1.87fr 1fr 1.5fr 1fr 1fr"
-      : "1.87fr 1fr 1.5fr 1fr 1fr";
+      ? "1fr 1.87fr 1fr 1.5fr 1fr 1fr"
+      : "1fr 1.87fr 1fr 1.5fr 1fr 1fr";
   const { recentTasks, recentTasksLoading, recentTasksError } = useSelector(
     (state) => state.dashboard,
   );
@@ -168,6 +182,20 @@ const RecentTaskTable = () => {
                 overflow: "hidden",
               }}
             >
+              {task.taskNumber}
+            </Typography>
+            <Typography
+              onClick={() => navigate(`/tasks/${task._id}`)}
+              sx={{
+                fontSize: "0.92rem",
+                color: "#111827",
+                fontWeight: 700,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                cursor: "pointer",
+              }}
+            >
               {task.title}
             </Typography>
 
@@ -189,7 +217,7 @@ const RecentTaskTable = () => {
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 3,
+                gap: 2,
                 flexWrap: "wrap",
               }}
             >

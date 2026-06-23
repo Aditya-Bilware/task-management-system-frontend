@@ -48,20 +48,7 @@ const StatsCards = () => {
           },
         }),
     },
-    {
-      title: "Overdue Tasks",
-      value: stats?.overdueTasks || 0,
-      subtitle: "Deadline Passed",
-      icon: <AccessTimeFilledRoundedIcon />,
-      color: "#dc2626",
-      bg: "#fee2e2",
-      onclick: () =>
-        navigate("/tasks", {
-          state: {
-            status: "overdue",
-          },
-        }),
-    },
+
     {
       title: "Active Task",
       value: stats?.activeTasks || 0,
@@ -73,6 +60,20 @@ const StatsCards = () => {
         navigate("/tasks", {
           state: {
             status: "active",
+          },
+        }),
+    },
+    {
+      title: "Overdue Tasks",
+      value: stats?.overdueTasks || 0,
+      subtitle: "Deadline Passed",
+      icon: <AccessTimeFilledRoundedIcon />,
+      color: "#dc2626",
+      bg: "#fee2e2",
+      onclick: () =>
+        navigate("/tasks", {
+          state: {
+            status: "overdue",
           },
         }),
     },

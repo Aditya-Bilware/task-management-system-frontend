@@ -9,6 +9,7 @@ import {
   Select,
   TextField,
   Typography,
+  Button,
 } from "@mui/material";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -34,7 +35,11 @@ import TasksHistorySkeleton from "../skeletons/taskHistory/TasksHistorySkeleton"
 import { fetchEmployees } from "../../features/users/employeeSlice";
 import { useNavigate } from "react-router-dom";
 
+import { exportCompletedTasksService } from "../../services/tasks/taskHistoryService";
+
 import EmptyState from "../common/EmptyState";
+import ExportTaskHistoryModal from "../../pages/taskHistory/ExportTaskHistoryModal";
+import { reportDate } from "../../utils/reportDate";
 
 const getStatusStyles = (status) => {
   switch (status) {
@@ -82,14 +87,54 @@ const TaskHistory = () => {
 
   const { employees } = useSelector((state) => state.employee);
 
+  const [exportModalOpen, setExportModalOpen] = useState(false);
+  const [exportLoading, setExportLoading] = useState(false);
+
+  const handleExport = async ({ fromDate, toDate }) => {
+    try {
+      setExportLoading(true);
+
+      const response = await exportCompletedTasksService(fromDate, toDate);
+
+      const blob = new Blob([response.data]);
+
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+
+      link.href = url;
+
+      link.download = `CompletedTasks_Report_${reportDate}.xlsx`;
+
+      document.body.appendChild(link);
+
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(url);
+
+      enqueueSnackbar("Report downloaded successfully", {
+        variant: "success",
+      });
+    } catch (err) {
+      // console.log(err);
+      enqueueSnackbar(err?.message || "Failed to export report", {
+        variant: "error",
+      });
+    } finally {
+      setExportLoading(false);
+    }
+  };
+
   const tableColumns =
     user?.role === "manager"
-      ? "2.3fr 1fr 1fr 1.3fr 1.3fr 1fr"
-      : "2.3fr 1.2fr 1fr 1fr 1fr";
+      ? "1fr 2.3fr 1fr 1fr 1.3fr 1.3fr 1fr"
+      : "1fr 2.3fr 1.2fr 1fr 1fr 1fr";
 
   const tableHeaders =
     user?.role === "manager"
       ? [
+          "Task ID",
           "Task Title",
           "Priority",
           "Final Status",
@@ -98,6 +143,7 @@ const TaskHistory = () => {
           "Action Date",
         ]
       : [
+          "Task ID",
           "Task Title",
           "Priority",
           "Final Status",
@@ -199,7 +245,7 @@ const TaskHistory = () => {
         }}
       >
         <Box>
-          <Typography
+          {/* <Typography
             sx={{
               fontSize: {
                 xs: "1.45rem",
@@ -211,7 +257,7 @@ const TaskHistory = () => {
             }}
           >
             Task History
-          </Typography>
+          </Typography> */}
 
           <Typography
             sx={{
@@ -224,17 +270,41 @@ const TaskHistory = () => {
           </Typography>
         </Box>
 
-        <Chip
-          icon={<HistoryOutlinedIcon />}
-          label={`${pagination?.totalTasks || 0}  ${taskCount}`}
+        <Box
           sx={{
-            borderRadius: "10px",
-            fontWeight: 700,
-            background: "#eff6ff",
-            color: "#2563eb",
-            px: 1,
+            display: "flex",
+            alignItems: "center",
+            gap: 1.5,
+            flexWrap: "wrap",
           }}
-        />
+        >
+          <Button
+            variant="contained"
+            disabled={exportLoading}
+            onClick={() => setExportModalOpen(true)}
+            sx={{
+              borderRadius: "12px",
+              textTransform: "none",
+              fontWeight: 700,
+              px: 2,
+              py: 1,
+            }}
+          >
+            Export Report
+          </Button>
+
+          <Chip
+            icon={<HistoryOutlinedIcon />}
+            label={`${pagination?.totalTasks || 0} ${taskCount}`}
+            sx={{
+              borderRadius: "10px",
+              fontWeight: 700,
+              background: "#eff6ff",
+              color: "#2563eb",
+              px: 1,
+            }}
+          />
+        </Box>
       </Box>
 
       {/* FILTER BAR */}
@@ -458,16 +528,23 @@ const TaskHistory = () => {
                   },
                 }}
               >
+                <Typography
+                  onClick={() => navigate(`/tasks/${task._id}`)}
+                  sx={{
+                    fontSize: "0.88rem",
+                    color: "#111827",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  {task.taskNumber}
+                </Typography>
                 {/* TITLE */}
 
                 <Typography
                   onClick={() => {
-                    if (task.finalStatus === "deleted") {
-                      enqueueSnackbar("Deleted tasks cannot be viewed", {
-                        variant: "warning",
-                      });
-                      return;
-                    }
                     navigate(`/tasks/${task._id}`);
                   }}
                   sx={{
@@ -618,7 +695,7 @@ const TaskHistory = () => {
               count={pagination.totalPages || 1}
               page={pagination.currentPage || 1}
               onChange={(e, value) => {
-                dispatch(setLoadingType("page"));
+                dispatch(setLoadingType("pagination"));
                 dispatch(setPage(value));
               }}
               color="primary"
@@ -627,6 +704,12 @@ const TaskHistory = () => {
           </Box>
         )}
       </Card>
+      <ExportTaskHistoryModal
+        open={exportModalOpen}
+        onClose={() => setExportModalOpen(false)}
+        onExport={handleExport}
+        loading={exportLoading}
+      />
     </Box>
   );
 };

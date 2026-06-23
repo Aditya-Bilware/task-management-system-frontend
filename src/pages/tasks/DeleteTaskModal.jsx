@@ -188,7 +188,7 @@ const DeleteTaskModal = () => {
                   color: "#0f172a",
                 }}
               >
-                Delete Task
+                Delete Task [{selectedTask.taskNumber}]
               </Typography>
 
               <Typography

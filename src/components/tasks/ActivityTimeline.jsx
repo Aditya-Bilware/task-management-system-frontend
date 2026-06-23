@@ -57,7 +57,34 @@ const renderActivityText = (activity) => {
           {activity.performedBy?.name}
         </Box>
 
-        {" created this task"}
+        {` created ${activity?.taskId?.title}`}
+      </>
+    );
+  }
+
+  if (activity.action === "deleted") {
+    return (
+      <>
+        <Box
+          component="span"
+          sx={{
+            fontWeight: 700,
+          }}
+        >
+          {activity.performedBy?.name}
+        </Box>
+
+        {" deleted "}
+
+        <Box
+          component="span"
+          sx={{
+            fontWeight: 700,
+            color: "#dc2626",
+          }}
+        >
+          {activity.taskId?.title}
+        </Box>
       </>
     );
   }

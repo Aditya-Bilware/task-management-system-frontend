@@ -188,7 +188,7 @@ const CreateTask = () => {
         }}
       >
         {/* PAGE HEADER */}
-        <Box
+        {/* <Box
           sx={{
             mb: 3,
           }}
@@ -207,7 +207,7 @@ const CreateTask = () => {
           >
             Create Task
           </Typography>
-        </Box>
+        </Box> */}
 
         <Box
           sx={{

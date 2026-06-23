@@ -74,12 +74,13 @@ const TaskTable = () => {
 
   const tableColumns =
     user?.role === "manager"
-      ? "2.2fr 1fr 1.8fr 1.2fr 1.2fr 1fr"
-      : "2.4fr 1.2fr 2fr 1.2fr 1.2fr 1fr";
+      ? "1fr 2.2fr 1fr 1.8fr 1.2fr 1.2fr 1fr"
+      : "1fr 2.4fr 1.2fr 2fr 1.2fr 1.2fr 1fr";
 
   const tableHeaders =
     user?.role === "manager"
       ? [
+          "Task ID",
           "Task Title",
           "Priority",
           "Status",
@@ -88,6 +89,7 @@ const TaskTable = () => {
           "Actions",
         ]
       : [
+          "Task ID",
           "Task Title",
           "Priority",
           "Status",
@@ -548,6 +550,19 @@ const TaskTable = () => {
                     : 1,
                 }}
               >
+                <Typography
+                  onClick={() => navigate(`/tasks/${task._id}`)}
+                  sx={{
+                    fontSize: "0.88rem",
+                    color: "#111827",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                    position: "relative",
+                    overflow: "hidden",
+                  }}
+                >
+                  {task.taskNumber}
+                </Typography>
                 {/* TITLE */}
                 <Typography
                   onClick={() => navigate(`/tasks/${task._id}`)}

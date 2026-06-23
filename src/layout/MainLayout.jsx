@@ -31,9 +31,9 @@ const MainLayout = () => {
 
         <Box
           sx={{
-            padding: "24px",
-            // maxWidth: "100%",
-            // margin: "0 auto",
+            p: 3,
+            // width: "100%",
+            // flex: 1,
           }}
         >
           <Outlet />
