@@ -78,7 +78,7 @@ const StatsCards = () => {
         }),
     },
     {
-      title: "Critical",
+      title: "Critical Tasks",
       value: stats?.criticalTasks || 0,
       subtitle: "Immediate Attention",
       icon: <PriorityHighOutlinedIcon />,
@@ -92,7 +92,7 @@ const StatsCards = () => {
         }),
     },
     {
-      title: "Completed",
+      title: "Completed Tasks",
       value: stats?.completedTasks || 0,
       subtitle: "Successfully Completed",
       icon: <CheckCircleOutlineOutlinedIcon />,
