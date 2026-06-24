@@ -3,7 +3,7 @@ import {
   Toolbar,
   Typography,
   Box,
-  Avatar,
+  // Avatar,
   Menu,
   MenuItem,
   Divider,
@@ -184,7 +184,7 @@ const Navbar = ({ setProfileOpen }) => {
             </IconButton>
 
             {/* User Info */}
-            <Box
+            {/* <Box
               onClick={(e) => setAnchor(e.currentTarget)}
               sx={{
                 display: "flex",
@@ -234,7 +234,7 @@ const Navbar = ({ setProfileOpen }) => {
                   {user?.employeeCode}
                 </Typography>
               </Box>
-            </Box>
+            </Box> */}
           </Box>
         </Toolbar>
         <Menu
