@@ -229,8 +229,8 @@ const RecentTaskTable = () => {
                 sx={{
                   bgcolor: status.bg,
                   color: status.color,
-                  fontWeight: 700,
-                  borderRadius: "5px",
+                  fontWeight: 600,
+                  fontSize: "0.88rem",
                   width: "fit-content",
                 }}
               />
@@ -276,8 +276,9 @@ const RecentTaskTable = () => {
                       borderRadius: "100px",
                       background: "#eedede",
                       color: "#dc2626",
-                      fontWeight: 770,
-                      fontSize: "0.82rem",
+                      fontWeight: 600,
+                      fontSize: "0.88rem",
+                      width: "fit-content",
                       boxShadow: "0 2px 8px rgba(239,68,68,.08)",
                     }}
                   >
