@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { LOGOUT_TIME, WARNING_TIME } from "../../utils/idleConstants";
 import IdleWarningModal from "./IdleWarningModal";
 import { logoutUser } from "../../utils/logOutUser";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const IdleTimer = () => {
@@ -10,18 +10,30 @@ const IdleTimer = () => {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
-  const [countdown, setCountDown] = useState(5);
-
-  const lastActivity = useRef(
-    Number(localStorage.getItem("lastActivity")) || Date.now(),
+  const [countdown, setCountDown] = useState(
+    (LOGOUT_TIME - WARNING_TIME) / 1000,
   );
+
+  const lastActivity = useRef(Date.now());
   const warningShown = useRef(false);
   const logoutDone = useRef(false);
 
   const isOpenRef = useRef(open);
+
   useEffect(() => {
     isOpenRef.current = open;
   }, [open]);
+
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const now = Date.now();
+
+    lastActivity.current = now;
+    localStorage.setItem("lastActivity", now.toString());
+  }, [user]);
 
   const handleStayLoggedIn = () => {
     const now = Date.now();
@@ -37,23 +49,19 @@ const IdleTimer = () => {
   };
 
   const handleLogout = () => {
-    // console.log("logout");
+    localStorage.removeItem("lastActivity");
     setOpen(false);
     logoutDone.current = true;
     logoutUser(dispatch, navigate);
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("lastActivity")) {
-      localStorage.setItem("lastActivity", Date.now());
-    }
-
     const updateActivity = () => {
       if (isOpenRef.current || warningShown.current) return;
       const now = Date.now();
       lastActivity.current = now;
 
-      localStorage.setItem("lastActivity", now.toString());
+      localStorage.setItem("lastActivity", Date.now().toString());
 
       // logoutDone.current = false;
 
@@ -84,11 +92,10 @@ const IdleTimer = () => {
       }
 
       if (inactiveTime >= LOGOUT_TIME && !logoutDone.current) {
+        localStorage.removeItem("lastActivity");
         setOpen(false);
-
         logoutDone.current = true;
         logoutUser(dispatch, navigate);
-        // console.log("auto logout");
       }
     };
 
@@ -134,8 +141,11 @@ const IdleTimer = () => {
         window.removeEventListener(event, updateActivity);
       });
     };
-  }, [dispatch, navigate]);
+  }, [user, dispatch, navigate]);
 
+  if (!user) {
+    return null;
+  }
   return (
     <>
       <IdleWarningModal
