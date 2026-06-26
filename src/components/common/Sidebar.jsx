@@ -21,14 +21,17 @@ import LogoutIcon from "@mui/icons-material/LogoutOutlined";
 
 import { NavLink, useNavigate } from "react-router-dom";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { clearCredentials } from "../../features/auth/authSlice";
-import { resetAppState } from "../../app/appActions";
+// import { clearCredentials } from "../../features/auth/authSlice";
+// import { resetAppState } from "../../app/appActions";
 import { useRef } from "react";
+import { useDispatch } from "react-redux";
+
 import SidebarProfile from "./SidebarProfile";
-import { resetNotifications } from "../../features/notifications/notificationsSlice";
-import { resetOverdueTasks } from "../../features/overdueTasks/overdueTasksSlice";
+import { logoutUser } from "../../utils/logOutUser";
+// import { resetNotifications } from "../../features/notifications/notificationsSlice";
+// import { resetOverdueTasks } from "../../features/overdueTasks/overdueTasksSlice";
 
 const drawerWidth = 250;
 
@@ -95,16 +98,6 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
   ];
 
   const menuItems = user?.role === "manager" ? managerMenu : employeeMenu;
-
-  const handleLogout = () => {
-    dispatch(clearCredentials());
-    dispatch(resetAppState());
-    dispatch(resetNotifications());
-    dispatch(resetOverdueTasks());
-    navigate("/", {
-      replace: true,
-    });
-  };
 
   return (
     <Drawer
@@ -288,7 +281,7 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
 
         {/* Logout */}
         <ListItemButton
-          onClick={handleLogout}
+          onClick={() => logoutUser(dispatch, navigate)}
           sx={{
             borderRadius: "12px",
             color: "#d1d5db",

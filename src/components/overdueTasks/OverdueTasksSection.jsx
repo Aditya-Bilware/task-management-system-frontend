@@ -32,7 +32,6 @@ const OverdueTasksSection = ({ open, onClose }) => {
     hasNextPage,
     totalOverdueTasks,
   } = useSelector((state) => state.overdueTask);
-  console.log(overdueTasks);
 
   const getSeverityColor = (days) => {
     if (days >= 7) return "#fb923c";
@@ -316,7 +315,8 @@ const OverdueTasksSection = ({ open, onClose }) => {
                 mb: 1,
               }}
             >
-              Showing {overdueTasks.length} of {totalOverdueTasks}
+              {!!overdueTasks.length &&
+                `Showing ${overdueTasks.length} of ${totalOverdueTasks}`}{" "}
             </Typography>
             <Button
               variant="outlined"

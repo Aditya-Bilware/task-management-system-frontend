@@ -132,7 +132,6 @@ const NotificationDrawer = ({ open, onClose }) => {
 
   // console.log(notifications?.activityLogId?.taskId?.taskNumber);
 
-  console.log(notifications);
   const [clearingIds, setClearingIds] = useState([]);
   const [isClearing, setIsClearing] = useState(false);
 
@@ -521,7 +520,7 @@ const NotificationDrawer = ({ open, onClose }) => {
           })}
         </Stack>
 
-        {hasNextPage && !notificationsLoading && (
+        {hasNextPage && !notificationsLoading && !notifications.length && (
           <Box
             sx={{
               display: "flex",
@@ -541,7 +540,8 @@ const NotificationDrawer = ({ open, onClose }) => {
                 mb: 1,
               }}
             >
-              Showing {notifications.length} of {totalNotifications}
+              {!!notifications.length &&
+                `Showing ${notifications.length} of ${totalNotifications}`}{" "}
             </Typography>
             <Button
               variant="outlined"
