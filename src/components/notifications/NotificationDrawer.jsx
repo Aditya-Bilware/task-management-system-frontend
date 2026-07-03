@@ -22,7 +22,7 @@ import DeleteSweepOutlinedIcon from "@mui/icons-material/DeleteSweepTwoTone";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
 import EmptyState from "../common/EmptyState";
@@ -119,6 +119,7 @@ const getNotificationConfig = (type) => {
 const NotificationDrawer = ({ open, onClose }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const panelRef = useRef(null);
 
   const {
     notifications,
@@ -169,6 +170,12 @@ const NotificationDrawer = ({ open, onClose }) => {
   const handleClearAll = async () => {
     if (!notifications.length || isClearing) return;
     try {
+      if (panelRef.current) {
+        panelRef.current.scrollTO({
+          top: 0,
+          behavior: "smooth",
+        });
+      }
       setIsClearing(true);
       const firstSix = notifications.slice(
         0,
