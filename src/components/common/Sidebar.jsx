@@ -137,7 +137,7 @@ const Sidebar = ({ profileOpen, setProfileOpen }) => {
             textOverflow: "ellipsis",
           }}
         >
-          Team Name
+          TMS
         </Typography>
       </Box>
 
