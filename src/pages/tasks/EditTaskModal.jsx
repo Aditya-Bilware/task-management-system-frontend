@@ -523,17 +523,6 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                             alignItems: "center",
 
                             gap: 1,
-                            px: 1.2,
-
-                            py: 0.45,
-
-                            borderRadius: "6px",
-
-                            fontSize: "0.9rem",
-
-                            fontWeight: 700,
-
-                            textTransform: "capitalize",
                           }}
                         >
                           <Avatar
@@ -567,7 +556,14 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                   }}
                 >
                   {employees.map((user) => (
-                    <MenuItem key={user._id} value={user._id}>
+                    <MenuItem
+                      key={user._id}
+                      value={user._id}
+                      sx={{
+                        px: 1.2,
+                        py: 0.45,
+                      }}
+                    >
                       <Box
                         sx={{
                           display: "flex",
