@@ -561,7 +561,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                       value={user._id}
                       sx={{
                         px: 1.2,
-                        py: 0.45,
+                        py: 5,
                       }}
                     >
                       <Box
