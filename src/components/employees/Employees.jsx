@@ -122,19 +122,6 @@ const Employees = () => {
           mb: 3,
         }}
       >
-        <Box>
-          <Typography
-            sx={{
-              fontSize: "1.9rem",
-              fontWeight: 700,
-              color: "#0f172a",
-              lineHeight: 1.2,
-            }}
-          >
-            Employees List
-          </Typography>
-        </Box>
-
         <Chip
           label={`Total Employees: ${employeesStats.length}`}
           sx={{

@@ -254,7 +254,7 @@ const TaskTable = () => {
       >
         {/* LEFT */}
         <Box>
-          <Typography
+          {/* <Typography
             sx={{
               fontSize: {
                 xs: "1.4rem",
@@ -266,7 +266,7 @@ const TaskTable = () => {
             }}
           >
             Task List
-          </Typography>
+          </Typography> */}
         </Box>
 
         {/* RIGHT */}
