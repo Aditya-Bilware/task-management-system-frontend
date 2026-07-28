@@ -9,6 +9,7 @@ import {
   IconButton,
   Fade,
   Avatar,
+  Autocomplete,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
 import CloseIcon from "@mui/icons-material/Close";
@@ -55,8 +56,6 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
   const { employees } = useSelector((state) => state.employee);
   const { user } = useSelector((state) => state.auth);
   const { enqueueSnackbar } = useSnackbar();
-
-  const [menuOpen, setMenuOpen] = useState(false);
 
   const isSelfCreated = selectedTask?.createdBy?._id === user?._id;
 
@@ -230,10 +229,10 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
         boxShadow: "0 0 0 3px rgba(37, 99, 235, 0.1)",
       },
     },
-    "& .MuiSelect-select": {
-      display: "flex",
-      alignItems: "center",
-    },
+    // "& .MuiSelect-select": {
+    //   display: "flex",
+    //   alignItems: "center",
+    // },
   };
 
   return (
@@ -505,120 +504,80 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
               <Box>
                 <LabelText>Assign To</LabelText>
 
-                <TextField
-                  select
+                <Autocomplete
                   fullWidth
                   size="small"
                   name="assignedTo"
-                  value={formData.assignedTo || ""}
-                  onChange={handleChange}
-                  sx={enterpriseInputStyles}
-                  SelectProps={{
-                    open: menuOpen,
-                    onOpen: setMenuOpen(true),
-                    onClose: setMenuOpen(false),
-                    MenuProps: {
-                      autoFocus: false,
-                      disableAutoFocusItem: true,
-                      disableRestoreFocus: true,
-                    },
-                    renderValue: (selected) => {
-                      const user = employees.find((u) => u._id === selected);
-
-                      return (
-                        <Box
-                          sx={{
-                            display: "flex",
-
-                            alignItems: "center",
-
-                            gap: 1,
-                            px: 1.2,
-                            // py: 5,
-                          }}
-                        >
-                          <Avatar
-                            sx={{
-                              width: 22,
-
-                              height: 22,
-
-                              fontSize: "0.7rem",
-
-                              fontWeight: 700,
-
-                              bgcolor: "#2563eb",
-                            }}
-                          >
-                            {user?.name?.charAt(0)}
-                          </Avatar>
-
-                          <Typography
-                            sx={{
-                              fontSize: "0.875rem",
-
-                              fontWeight: 600,
-                            }}
-                          >
-                            {user?.name || ""}
-                          </Typography>
-                        </Box>
-                      );
-                    },
+                  options={employees}
+                  value={
+                    employees.find((emp) => emp._id === formData.assignedTo) ||
+                    null
+                  }
+                  onChange={(e, value) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      assignedTo: value?._id || "",
+                    }));
                   }}
-                >
-                  {employees.map((user) => (
-                    <MenuItem key={user._id} value={user._id}>
+                  getOptionLabel={(emp) => `${emp.name} (${emp.employeeCode})`}
+                  isOptionEqualToValue={(option, value) =>
+                    option._id === value?._id
+                  }
+                  renderOption={(props, emp) => {
+                    const { key, ...optionProps } = props;
+
+                    return (
                       <Box
+                        key={key}
+                        component={"li"}
+                        {...optionProps}
                         sx={{
                           display: "flex",
-
                           alignItems: "center",
-
-                          gap: 1.2,
+                          gap: 1.5,
+                          py: 1,
                         }}
                       >
                         <Avatar
                           sx={{
-                            width: 24,
-
-                            height: 24,
-
-                            fontSize: "0.72rem",
-
-                            fontWeight: 700,
-
+                            width: 32,
+                            height: 32,
+                            fontSize: "0.78rem",
                             bgcolor: "#2563eb",
+                            fontWeight: 600,
                           }}
                         >
-                          {user.name?.charAt(0)}
+                          {emp.name[0]}
                         </Avatar>
-
                         <Box>
                           <Typography
                             sx={{
-                              fontSize: "0.875rem",
-
+                              fontSize: "0.88rem",
                               fontWeight: 600,
+                              color: "#0f172a",
                             }}
                           >
-                            {user.name}
+                            {emp.name}
                           </Typography>
-
                           <Typography
-                            sx={{
-                              fontSize: "0.72rem",
-
-                              color: "#64748b",
-                            }}
+                            sx={{ fontSize: "0.75rem", color: "#64748b" }}
                           >
-                            {user.employeeCode}
+                            {emp.employeeCode}
                           </Typography>
                         </Box>
                       </Box>
-                    </MenuItem>
-                  ))}
-                </TextField>
+                    );
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      placeholder="Assign Employee"
+                      size="small"
+                      sx={enterpriseInputStyles}
+                    />
+                  )}
+                  sx={enterpriseInputStyles}
+                ></Autocomplete>
               </Box>
             )}
 
