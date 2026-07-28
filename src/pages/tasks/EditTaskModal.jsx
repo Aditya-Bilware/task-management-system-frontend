@@ -229,10 +229,10 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
         boxShadow: "0 0 0 3px rgba(37, 99, 235, 0.1)",
       },
     },
-    // "& .MuiSelect-select": {
-    //   display: "flex",
-    //   alignItems: "center",
-    // },
+    "& .MuiSelect-select": {
+      display: "flex",
+      alignItems: "center",
+    },
   };
 
   return (
@@ -519,7 +519,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                       assignedTo: value?._id || "",
                     }));
                   }}
-                  getOptionLabel={(emp) => `${emp.name} (${emp.employeeCode})`}
+                  getOptionLabel={(emp) => emp?.name || ""}
                   isOptionEqualToValue={(option, value) =>
                     option._id === value?._id
                   }
@@ -568,14 +568,41 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                       </Box>
                     );
                   }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      placeholder="Assign Employee"
-                      size="small"
-                      sx={enterpriseInputStyles}
-                    />
-                  )}
+                  renderInput={(params) => {
+                    const selectedEmployee = employees.find(
+                      (emp) => emp._id === formData.assignedTo,
+                    );
+
+                    return (
+                      <TextField
+                        {...params}
+                        placeholder="Assign Employee"
+                        InputProps={{
+                          ...params.InputProps,
+
+                          startAdornment: (
+                            <>
+                              {selectedEmployee && (
+                                <Avatar
+                                  sx={{
+                                    width: 24,
+                                    height: 24,
+                                    fontSize: "0.72rem",
+                                    bgcolor: "#2563eb",
+                                    mr: 1,
+                                  }}
+                                >
+                                  {selectedEmployee.name[0]}
+                                </Avatar>
+                              )}
+
+                              {params.InputProps.startAdornment}
+                            </>
+                          ),
+                        }}
+                      />
+                    );
+                  }}
                   sx={enterpriseInputStyles}
                 ></Autocomplete>
               </Box>
