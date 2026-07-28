@@ -56,6 +56,8 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
   const { user } = useSelector((state) => state.auth);
   const { enqueueSnackbar } = useSnackbar();
 
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const isSelfCreated = selectedTask?.createdBy?._id === user?._id;
 
   const canFullyEdit =
@@ -88,14 +90,14 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
   useEffect(() => {
     if (!open) return;
 
-    if (user?.role === "manager") {
+    if (user?.role === "manager" && employees.length === 0) {
       dispatch(fetchEmployees());
     }
 
     if (shouldFetchTask && id) {
       dispatch(fetchTaskById(id));
     }
-  }, [open, id, user, shouldFetchTask, dispatch]);
+  }, [open, id, user, shouldFetchTask, dispatch, employees]);
 
   useEffect(() => {
     if (!selectedTask) {
@@ -512,6 +514,9 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                   onChange={handleChange}
                   sx={enterpriseInputStyles}
                   SelectProps={{
+                    open: menuOpen,
+                    onOpen: setMenuOpen(true),
+                    onClose: setMenuOpen(false),
                     MenuProps: {
                       autoFocus: false,
                       disableAutoFocusItem: true,
@@ -529,7 +534,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
 
                             gap: 1,
                             px: 1.2,
-                            py: 5,
+                            // py: 5,
                           }}
                         >
                           <Avatar
