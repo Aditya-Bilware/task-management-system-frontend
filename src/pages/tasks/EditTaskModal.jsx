@@ -512,6 +512,11 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                   onChange={handleChange}
                   sx={enterpriseInputStyles}
                   SelectProps={{
+                    MenuProps: {
+                      autoFocus: false,
+                      disableAutoFocusItem: true,
+                      disableRestoreFocus: true,
+                    },
                     renderValue: (selected) => {
                       const user = employees.find((u) => u._id === selected);
 
