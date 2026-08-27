@@ -270,7 +270,7 @@ const LoginPage = () => {
             fullWidth
             variant="contained"
             type="submit"
-            disabled={loading}
+            disabled={loading || password.length < 5}
             sx={{
               py: 1.3,
               borderRadius: "10px",
