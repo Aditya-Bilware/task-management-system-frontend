@@ -36,7 +36,7 @@ const LoginPage = () => {
     try {
       dispatch(setLoading(true));
 
-      if (password.length < 4) return;
+      if (password.length < 6) return;
 
       const data = await loginUser({
         email,
