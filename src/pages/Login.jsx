@@ -36,6 +36,8 @@ const LoginPage = () => {
     try {
       dispatch(setLoading(true));
 
+      if (password.length < 5) return;
+
       const data = await loginUser({
         email,
         password,
@@ -268,7 +270,7 @@ const LoginPage = () => {
             fullWidth
             variant="contained"
             type="submit"
-            disabled={loading}
+            disabled={loading || password.length < 5}
             sx={{
               py: 1.3,
               borderRadius: "10px",
