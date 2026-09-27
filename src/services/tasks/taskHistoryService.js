@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 import API from "/src/api/axios.js";
 
 export const getTaskHistoryService = async (params) => {
@@ -15,8 +17,8 @@ export const exportCompletedTasksService = async (fromDate, toDate) => {
     const res = await API.post(
       "/reports/task-history",
       {
-        fromDate,
-        toDate,
+        fromDate: format(fromDate, "yyyy-MM-dd"),
+        toDate: format(toDate, "yyyy-MM-dd"),
       },
       {
         responseType: "blob",
