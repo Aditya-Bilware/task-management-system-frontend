@@ -89,6 +89,26 @@ const renderActivityText = (activity) => {
     );
   }
 
+  if (
+    activity.action === "updated" &&
+    activity.fieldChanged === "description"
+  ) {
+    return (
+      <>
+        <Box
+          component="span"
+          sx={{
+            fontWeight: 700,
+          }}
+        >
+          {activity.performedBy?.name}
+        </Box>
+
+        {" changed description"}
+      </>
+    );
+  }
+
   // UPDATED
   return (
     <>
@@ -271,6 +291,7 @@ const ActivityTimeline = ({ taskId }) => {
               }}
             >
               {/* TEXT */}
+
               <Typography
                 sx={{
                   fontSize: "0.88rem",
