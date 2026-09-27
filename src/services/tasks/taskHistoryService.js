@@ -14,11 +14,17 @@ export const getTaskHistoryService = async (params) => {
 
 export const exportCompletedTasksService = async (fromDate, toDate) => {
   try {
+    const formattedFromDate = format(fromDate, "yyyy-MM-dd");
+    const formattedToDate = format(toDate, "yyyy-MM-dd");
+
+    console.log("FROM DATE:", formattedFromDate);
+    console.log("TO DATE:", formattedToDate);
+
     const res = await API.post(
       "/reports/task-history",
       {
-        fromDate: format(fromDate, "yyyy-MM-dd"),
-        toDate: format(toDate, "yyyy-MM-dd"),
+        fromDate: formattedFromDate,
+        toDate: formattedToDate,
       },
       {
         responseType: "blob",
