@@ -1,3 +1,5 @@
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import {
   Box,
   Card,
@@ -48,6 +50,17 @@ const statuses = [
   "backlog",
   "rejected",
 ];
+
+const quillModules = {
+  toolbar: [
+    [{ header: [1, 2, 3, false] }],
+    ["bold", "italic", "underline", "strike"],
+    [{ list: "ordered" }, { list: "bullet" }],
+    [{ indent: "-1" }, { indent: "+1" }],
+    ["link"],
+    ["clean"],
+  ],
+};
 
 const enterpriseInputStyles = {
   "& .MuiOutlinedInput-root": {
@@ -309,16 +322,48 @@ const CreateTask = () => {
                 <Box>
                   <LabelText>Description</LabelText>
 
-                  <TextField
-                    fullWidth
-                    multiline
-                    minRows={5}
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    placeholder="Enter task description"
-                    sx={enterpriseInputStyles}
-                  />
+                  <Box
+                    sx={{
+                      "& .ql-toolbar": {
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "14px 14px 0 0",
+                        background: "#ffffff",
+                      },
+
+                      "& .ql-container": {
+                        border: "1px solid #e2e8f0",
+                        borderTop: "none",
+                        borderRadius: "0 0 14px 14px",
+                        background: "#ffffff",
+                        minHeight: "180px",
+                        fontSize: "0.92rem",
+                        fontWeight: 600,
+                      },
+
+                      "& .ql-editor": {
+                        minHeight: "150px",
+                        color: "#111827",
+                      },
+
+                      "& .ql-editor.ql-blank::before": {
+                        color: "#94a3b8",
+                        fontStyle: "normal",
+                      },
+                    }}
+                  >
+                    <ReactQuill
+                      theme="snow"
+                      value={formData.description}
+                      onChange={(value) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          description: value,
+                        }))
+                      }
+                      modules={quillModules}
+                      placeholder="Enter task description..."
+                    />
+                  </Box>
                 </Box>
 
                 {/* PRIORITY + STATUS */}
