@@ -337,7 +337,7 @@ const CreateTask = () => {
                         background: "#ffffff",
                         minHeight: "180px",
                         fontSize: "0.92rem",
-                        fontWeight: 300,
+                        fontWeight: 500,
                       },
 
                       "& .ql-editor": {
