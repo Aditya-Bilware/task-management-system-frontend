@@ -1,3 +1,5 @@
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
 import {
   Dialog,
   DialogContent,
@@ -28,6 +30,7 @@ import {
   updateTask,
 } from "../../features/tasks/taskSlice";
 import { fetchEmployees } from "../../features/users/employeeSlice";
+import { quillModules } from "../../utils/quillModules";
 
 // Global Label Sub-Component
 const LabelText = ({ children }) => (
@@ -604,18 +607,22 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
             )}
 
             {/* DESCRIPTION */}
+            {/* DESCRIPTION */}
             {canFullyEdit && (
               <Box>
                 <LabelText>Description</LabelText>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={4}
-                  size="small"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  sx={enterpriseInputStyles}
+
+                <ReactQuill
+                  theme="snow"
+                  value={formData.description || ""}
+                  onChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      description: value,
+                    }))
+                  }
+                  modules={quillModules}
+                  placeholder="Enter task description"
                 />
               </Box>
             )}

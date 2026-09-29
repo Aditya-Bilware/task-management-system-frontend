@@ -32,6 +32,7 @@ import { useEffect, useState } from "react";
 import { fetchEmployees } from "../../features/users/employeeSlice";
 import { createTask } from "../../features/tasks/taskSlice";
 import CreateTaskSkeleton from "../../components/skeletons/tasks/CreateTaskSkeleton";
+import { quillModules } from "../../utils/quillModules";
 
 const priorities = [
   "critical",
@@ -50,17 +51,6 @@ const statuses = [
   "backlog",
   "rejected",
 ];
-
-const quillModules = {
-  toolbar: [
-    [{ header: [1, 2, 3, false] }],
-    ["bold", "italic", "underline", "strike"],
-    [{ list: "ordered" }, { list: "bullet" }],
-    [{ indent: "-1" }, { indent: "+1" }],
-    ["link"],
-    ["clean"],
-  ],
-};
 
 const enterpriseInputStyles = {
   "& .MuiOutlinedInput-root": {
