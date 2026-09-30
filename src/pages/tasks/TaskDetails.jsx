@@ -450,6 +450,8 @@ const TaskDetails = () => {
               xs: 2.5,
               md: 4,
             },
+            width: "100%",
+            boxSizing: "border-box",
           }}
         >
           <Typography
@@ -465,11 +467,16 @@ const TaskDetails = () => {
 
           <Box
             sx={{
-              maxWidth: "750px",
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 0,
+
               fontSize: "0.88rem",
-              fontWeight: 700,
+              fontWeight: 600,
               color: "#475569",
               lineHeight: 1.8,
+
+              overflowWrap: "break-word",
 
               "& p": {
                 margin: "0 0 12px",
@@ -477,13 +484,19 @@ const TaskDetails = () => {
               },
 
               "& ul": {
-                paddingLeft: "24px",
+                paddingLeft: {
+                  xs: "20px",
+                  sm: "24px",
+                },
                 marginTop: "8px",
                 marginBottom: "12px",
               },
 
               "& ol": {
-                paddingLeft: "24px",
+                paddingLeft: {
+                  xs: "20px",
+                  sm: "24px",
+                },
                 marginTop: "8px",
                 marginBottom: "12px",
               },
@@ -498,17 +511,26 @@ const TaskDetails = () => {
               },
 
               "& h1": {
-                fontSize: "1.5rem",
+                fontSize: {
+                  xs: "1.3rem",
+                  sm: "1.5rem",
+                },
                 margin: "16px 0 8px",
               },
 
               "& h2": {
-                fontSize: "1.3rem",
+                fontSize: {
+                  xs: "1.15rem",
+                  sm: "1.3rem",
+                },
                 margin: "16px 0 8px",
               },
 
               "& h3": {
-                fontSize: "1.1rem",
+                fontSize: {
+                  xs: "1.05rem",
+                  sm: "1.1rem",
+                },
                 margin: "14px 0 8px",
               },
 
@@ -516,8 +538,6 @@ const TaskDetails = () => {
                 color: "#2563eb",
                 textDecoration: "underline",
               },
-
-              wordBreak: "break-word",
             }}
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(selectedTask?.description || ""),
