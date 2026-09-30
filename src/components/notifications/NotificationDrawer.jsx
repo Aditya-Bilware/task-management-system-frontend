@@ -527,7 +527,7 @@ const NotificationDrawer = ({ open, onClose }) => {
           })}
         </Stack>
 
-        {hasNextPage && !notificationsLoading && !notifications.length && (
+        {hasNextPage && !notificationsLoading && notifications.length > 0 && (
           <Box
             sx={{
               display: "flex",
