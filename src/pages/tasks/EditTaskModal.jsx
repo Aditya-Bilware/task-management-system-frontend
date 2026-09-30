@@ -466,6 +466,7 @@ const EditTaskModal = ({ open, taskId, onClose, shouldFetchTask = false }) => {
                     "in-progress",
                     "next",
                     "on-hold",
+                    "review",
                     "done",
                     "backlog",
                     "rejected",

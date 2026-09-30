@@ -47,6 +47,7 @@ const statuses = [
   "in-progress",
   "next",
   "on-hold",
+  "review",
   "done",
   "backlog",
   "rejected",

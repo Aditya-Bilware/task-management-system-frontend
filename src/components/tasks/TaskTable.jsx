@@ -414,6 +414,7 @@ const TaskTable = () => {
               <MenuItem value="backlog">Backlog</MenuItem>
               <MenuItem value="next">Next</MenuItem>
               <MenuItem value="on-hold">On-Hold</MenuItem>
+              <MenuItem value="review">Review</MenuItem>
               <MenuItem value="in-progress">In Progress</MenuItem>
               <MenuItem value="done">Done</MenuItem>
               <MenuItem value="rejected">Rejected</MenuItem>
