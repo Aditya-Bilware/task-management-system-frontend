@@ -450,8 +450,6 @@ const TaskDetails = () => {
               xs: 2.5,
               md: 4,
             },
-            width: "100%",
-            boxSizing: "border-box",
           }}
         >
           <Typography
@@ -465,79 +463,70 @@ const TaskDetails = () => {
             Description
           </Typography>
 
-          <Box
-            lang="en"
+          <Typography
             sx={{
-              width: "100%",
-              maxWidth: "100%",
-              minWidth: 0,
-
               fontSize: "0.88rem",
-              fontWeight: 600,
+              fontWeight: 700,
               color: "#475569",
               lineHeight: 1.8,
-
-              // Keep content inside the available width
-              overflow: "hidden",
-
-              // Normal wrapping
-              wordBreak: "normal",
-              overflowWrap: "break-word",
-
-              // Add hyphen when breaking long words
-              hyphens: "auto",
-              hyphenateCharacter: "-",
-
-              "& p": {
-                margin: "0 0 12px",
-                lineHeight: 1.7,
-              },
-
-              "& ul": {
-                paddingLeft: "24px",
-                marginTop: "8px",
-                marginBottom: "12px",
-              },
-
-              "& ol": {
-                paddingLeft: "24px",
-                marginTop: "8px",
-                marginBottom: "12px",
-              },
-
-              "& li": {
-                marginBottom: "6px",
-                lineHeight: 1.6,
-              },
-
-              "& strong": {
-                fontWeight: 700,
-              },
-
-              "& h1": {
-                fontSize: "1.5rem",
-                margin: "16px 0 8px",
-              },
-
-              "& h2": {
-                fontSize: "1.3rem",
-                margin: "16px 0 8px",
-              },
-
-              "& h3": {
-                fontSize: "1.1rem",
-                margin: "14px 0 8px",
-              },
-
-              "& a": {
-                color: "#2563eb",
-                textDecoration: "underline",
-              },
+              maxWidth: "900px",
             }}
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(selectedTask?.description || ""),
-            }}
-          />
+          >
+            <Box
+              sx={{
+                maxWidth: "900px",
+
+                "& p": {
+                  margin: "0 0 12px",
+                  lineHeight: 1.7,
+                },
+
+                "& ul": {
+                  paddingLeft: "24px",
+                  marginTop: "8px",
+                  marginBottom: "12px",
+                },
+
+                "& ol": {
+                  paddingLeft: "24px",
+                  marginTop: "8px",
+                  marginBottom: "12px",
+                },
+
+                "& li": {
+                  marginBottom: "6px",
+                  lineHeight: 1.6,
+                },
+
+                "& strong": {
+                  fontWeight: 700,
+                },
+
+                "& h1": {
+                  fontSize: "1.5rem",
+                  margin: "16px 0 8px",
+                },
+
+                "& h2": {
+                  fontSize: "1.3rem",
+                  margin: "16px 0 8px",
+                },
+
+                "& h3": {
+                  fontSize: "1.1rem",
+                  margin: "14px 0 8px",
+                },
+
+                "& a": {
+                  color: "#2563eb",
+                  textDecoration: "underline",
+                },
+              }}
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(selectedTask?.description || ""),
+              }}
+            />
+          </Typography>
         </Box>
 
         <Divider />
