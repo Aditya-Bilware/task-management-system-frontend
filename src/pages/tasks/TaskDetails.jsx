@@ -466,6 +466,7 @@ const TaskDetails = () => {
           </Typography>
 
           <Box
+            lang="en"
             sx={{
               width: "100%",
               maxWidth: "100%",
@@ -476,7 +477,16 @@ const TaskDetails = () => {
               color: "#475569",
               lineHeight: 1.8,
 
+              // Keep content inside the available width
+              overflow: "hidden",
+
+              // Normal wrapping
+              wordBreak: "normal",
               overflowWrap: "break-word",
+
+              // Add hyphen when breaking long words
+              hyphens: "auto",
+              hyphenateCharacter: "-",
 
               "& p": {
                 margin: "0 0 12px",
@@ -484,19 +494,13 @@ const TaskDetails = () => {
               },
 
               "& ul": {
-                paddingLeft: {
-                  xs: "20px",
-                  sm: "24px",
-                },
+                paddingLeft: "24px",
                 marginTop: "8px",
                 marginBottom: "12px",
               },
 
               "& ol": {
-                paddingLeft: {
-                  xs: "20px",
-                  sm: "24px",
-                },
+                paddingLeft: "24px",
                 marginTop: "8px",
                 marginBottom: "12px",
               },
@@ -511,26 +515,17 @@ const TaskDetails = () => {
               },
 
               "& h1": {
-                fontSize: {
-                  xs: "1.3rem",
-                  sm: "1.5rem",
-                },
+                fontSize: "1.5rem",
                 margin: "16px 0 8px",
               },
 
               "& h2": {
-                fontSize: {
-                  xs: "1.15rem",
-                  sm: "1.3rem",
-                },
+                fontSize: "1.3rem",
                 margin: "16px 0 8px",
               },
 
               "& h3": {
-                fontSize: {
-                  xs: "1.05rem",
-                  sm: "1.1rem",
-                },
+                fontSize: "1.1rem",
                 margin: "14px 0 8px",
               },
 
