@@ -10,7 +10,10 @@ import {
   IconButton,
   Badge,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import {
+  // useEffect,
+  useState,
+} from "react";
 
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
@@ -23,11 +26,11 @@ import { resetAppState } from "../../app/appActions";
 import NotificationDrawer from "../notifications/NotificationDrawer";
 import OverdueTasksSection from "../overdueTasks/OverdueTasksSection";
 import {
-  fetchUnreadNotificationsCount,
+  // fetchUnreadNotificationsCount,
   resetNotifications,
 } from "../../features/notifications/notificationsSlice";
 import {
-  fetchOverdueTasksCount,
+  // fetchOverdueTasksCount,
   resetOverdueTasks,
 } from "../../features/overdueTasks/overdueTasksSlice";
 
@@ -74,14 +77,14 @@ const Navbar = ({ setProfileOpen }) => {
     );
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(fetchUnreadNotificationsCount());
-      dispatch(fetchOverdueTasksCount());
-    }, 10000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     dispatch(fetchUnreadNotificationsCount());
+  //     dispatch(fetchOverdueTasksCount());
+  //   }, 10000);
 
-    return () => clearInterval(interval);
-  }, [dispatch]);
+  //   return () => clearInterval(interval);
+  // }, [dispatch]);
 
   const handleLogout = () => {
     dispatch(clearCredentials());
