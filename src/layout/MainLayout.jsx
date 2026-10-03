@@ -22,6 +22,7 @@ const MainLayout = () => {
         component="main"
         sx={{
           flexGrow: 1,
+          minWidth: 0,
           minHeight: "100vh",
           backgroundColor: "#f3f4f6",
           display: "flex",
@@ -35,7 +36,9 @@ const MainLayout = () => {
         <Box
           sx={{
             p: 3,
-            // width: "100%",
+            width: "100%",
+            minWidth: 0,
+            boxSizing: "border-box",
             // flex: 1,
           }}
         >

@@ -68,8 +68,11 @@ const TaskDetails = () => {
           xs: 2,
           md: 2,
         },
+        width: "100%",
         maxWidth: "1400px",
+        minWidth: 0,
         mx: "auto",
+        boxSizing: "border-box",
         backgroundColor: "#f8fafc",
         minHeight: "100vh",
       }}
@@ -444,12 +447,16 @@ const TaskDetails = () => {
         <Divider />
 
         {/* DESCRIPTION */}
+        {/* DESCRIPTION */}
         <Box
           sx={{
             p: {
               xs: 2.5,
               md: 4,
             },
+            width: "100%",
+            minWidth: 0,
+            boxSizing: "border-box",
           }}
         >
           <Typography
@@ -463,70 +470,103 @@ const TaskDetails = () => {
             Description
           </Typography>
 
-          <Typography
+          <Box
+            lang="en"
             sx={{
+              width: "100%",
+              maxWidth: "100%",
+              minWidth: 0,
+
               fontSize: "0.88rem",
               fontWeight: 700,
               color: "#475569",
               lineHeight: 1.8,
-              maxWidth: "900px",
+
+              /*
+               * Prevent the description from creating
+               * horizontal page scrolling.
+               */
+              overflow: "hidden",
+
+              /*
+               * Normal word wrapping.
+               * Long words can break if necessary.
+               */
+              wordBreak: "normal",
+              overflowWrap: "break-word",
+
+              /*
+               * Allow browser to hyphenate words where possible.
+               */
+              hyphens: "auto",
+
+              "& p": {
+                margin: "0 0 12px",
+                lineHeight: 1.7,
+              },
+
+              "& ul": {
+                paddingLeft: {
+                  xs: "20px",
+                  sm: "24px",
+                },
+                marginTop: "8px",
+                marginBottom: "12px",
+              },
+
+              "& ol": {
+                paddingLeft: {
+                  xs: "20px",
+                  sm: "24px",
+                },
+                marginTop: "8px",
+                marginBottom: "12px",
+              },
+
+              "& li": {
+                marginBottom: "6px",
+                lineHeight: 1.6,
+              },
+
+              "& strong": {
+                fontWeight: 700,
+              },
+
+              "& h1": {
+                fontSize: {
+                  xs: "1.3rem",
+                  sm: "1.5rem",
+                },
+                margin: "16px 0 8px",
+              },
+
+              "& h2": {
+                fontSize: {
+                  xs: "1.15rem",
+                  sm: "1.3rem",
+                },
+                margin: "16px 0 8px",
+              },
+
+              "& h3": {
+                fontSize: {
+                  xs: "1.05rem",
+                  sm: "1.1rem",
+                },
+                margin: "14px 0 8px",
+              },
+
+              "& a": {
+                color: "#2563eb",
+                textDecoration: "underline",
+              },
             }}
-          >
-            <Box
-              sx={{
-                maxWidth: "900px",
-
-                "& p": {
-                  margin: "0 0 12px",
-                  lineHeight: 1.7,
-                },
-
-                "& ul": {
-                  paddingLeft: "24px",
-                  marginTop: "8px",
-                  marginBottom: "12px",
-                },
-
-                "& ol": {
-                  paddingLeft: "24px",
-                  marginTop: "8px",
-                  marginBottom: "12px",
-                },
-
-                "& li": {
-                  marginBottom: "6px",
-                  lineHeight: 1.6,
-                },
-
-                "& strong": {
-                  fontWeight: 700,
-                },
-
-                "& h1": {
-                  fontSize: "1.5rem",
-                  margin: "16px 0 8px",
-                },
-
-                "& h2": {
-                  fontSize: "1.3rem",
-                  margin: "16px 0 8px",
-                },
-
-                "& h3": {
-                  fontSize: "1.1rem",
-                  margin: "14px 0 8px",
-                },
-
-                "& a": {
-                  color: "#2563eb",
-                  textDecoration: "underline",
-                },
-              }}
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(selectedTask?.description || ""),
-              }}
-            />
-          </Typography>
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(
+                selectedTask?.description || "",
+              ).replace(/&nbsp;/gi, " "),
+            }}
+          />
         </Box>
 
         <Divider />
