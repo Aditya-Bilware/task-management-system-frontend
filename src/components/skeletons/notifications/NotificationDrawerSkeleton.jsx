@@ -43,7 +43,7 @@ const NotificationDrawerSkeleton = () => {
             }}
           />
 
-          {/* Old → New Value */}
+          {/* Old -> New Value */}
           <Skeleton
             variant="text"
             width="55%"

@@ -447,7 +447,6 @@ const TaskDetails = () => {
         <Divider />
 
         {/* DESCRIPTION */}
-        {/* DESCRIPTION */}
         <Box
           sx={{
             p: {
@@ -481,23 +480,9 @@ const TaskDetails = () => {
               fontWeight: 700,
               color: "#475569",
               lineHeight: 1.8,
-
-              /*
-               * Prevent the description from creating
-               * horizontal page scrolling.
-               */
               overflow: "hidden",
-
-              /*
-               * Normal word wrapping.
-               * Long words can break if necessary.
-               */
               wordBreak: "normal",
               overflowWrap: "break-word",
-
-              /*
-               * Allow browser to hyphenate words where possible.
-               */
               hyphens: "auto",
 
               "& p": {
