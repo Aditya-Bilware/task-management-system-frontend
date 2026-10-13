@@ -10,6 +10,7 @@ import CreateTask from "/src/pages/tasks/CreateTask.jsx";
 import Employee from "../components/employees/Employees";
 import TaskHistory from "../components/taskHistory/TaskHistory";
 import ScrollToTop from "../components/common/ScrollToTop";
+import WorkLogs from "../pages/tasks/WorkLogs";
 
 const AppRoutes = () => {
   return (
@@ -33,6 +34,7 @@ const AppRoutes = () => {
           <Route path="/tasks/:id" element={<TaskDetails />} />
           <Route path="/tasks/:id/edit" element={<Tasks />} />
           <Route path="/tasks/:id/delete" element={<Tasks />} />
+          <Route path="/tasks/:id/workLogs" element={<WorkLogs />} />
           <Route path="/tasks/create" element={<CreateTask />} />
           <Route path="/employees" element={<Employee />} />
           <Route path="/tasksHistory" element={<TaskHistory />} />

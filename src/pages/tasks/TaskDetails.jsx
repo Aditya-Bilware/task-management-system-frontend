@@ -10,9 +10,10 @@ import {
 } from "@mui/material";
 
 import EditTaskModal from "./EditTaskModal";
+import LogWorkModal from "./LogWorkModal";
 
 import { fetchTaskById } from "../../features/tasks/taskSlice";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import ActivityTimeline from "../../components/tasks/ActivityTimeline";
@@ -23,6 +24,8 @@ import { isTaskOverdue } from "../../utils/overdue";
 import { formatDate } from "../../utils/formatdate";
 const TaskDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const { selectedTask, selectedTaskLoading, selectedTaskError } = useSelector(
@@ -32,6 +35,7 @@ const TaskDetails = () => {
   const { user } = useSelector((state) => state.auth);
 
   const [editOpen, setEditOpen] = useState(false);
+  const [logWorkOpen, setLogWorkOpen] = useState(false);
 
   const isEmpCreated = selectedTask?.createdBy._id === user?._id;
 
@@ -113,10 +117,21 @@ const TaskDetails = () => {
         </Box>
 
         {/* RIGHT */}
-        {showEditButton() && (
+
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: 1.5,
+            width: {
+              xs: "100%",
+              sm: "auto",
+            },
+          }}
+        >
           <Button
-            onClick={() => setEditOpen(true)}
             variant="contained"
+            onClick={() => setLogWorkOpen(true)}
             sx={{
               textTransform: "none",
               borderRadius: "10px",
@@ -124,15 +139,53 @@ const TaskDetails = () => {
               py: 1,
               fontWeight: 600,
               boxShadow: "none",
-              width: {
-                xs: "100%",
-                sm: "auto",
+              backgroundColor: "green",
+              flex: {
+                sx: 1,
+                sm: "initial",
               },
             }}
           >
-            Edit Task
+            Log Work
           </Button>
-        )}
+          <Button
+            variant="outlined"
+            onClick={() => navigate(`/tasks/${id}/worklogs`)}
+            sx={{
+              textTransform: "none",
+              borderRadius: "10px",
+              px: 2.5,
+              py: 1,
+              fontWeight: 600,
+              flex: {
+                xs: 1,
+                sm: "initial",
+              },
+            }}
+          >
+            View Work Logs
+          </Button>
+          {showEditButton() && (
+            <Button
+              onClick={() => setEditOpen(true)}
+              variant="contained"
+              sx={{
+                textTransform: "none",
+                borderRadius: "10px",
+                px: 2.5,
+                py: 1,
+                fontWeight: 600,
+                boxShadow: "none",
+                width: {
+                  xs: "100%",
+                  sm: "auto",
+                },
+              }}
+            >
+              Edit Task
+            </Button>
+          )}
+        </Box>
       </Box>
       {/* Main Card */}
       <Card
@@ -670,6 +723,13 @@ const TaskDetails = () => {
         taskId={id}
         onClose={() => setEditOpen(false)}
         shouldFetchTask={false}
+      />
+
+      <LogWorkModal
+        open={logWorkOpen}
+        onClose={() => setLogWorkOpen(false)}
+        taskId={id}
+        taskCreatedAt={selectedTask?.createdAt}
       />
     </Box>
   );

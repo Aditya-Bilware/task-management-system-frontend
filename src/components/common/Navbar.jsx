@@ -59,6 +59,7 @@ const Navbar = ({ setProfileOpen }) => {
     const titles = {
       "/dashboard": "Dashboard",
       "/tasks/:id": "Task Details",
+      "/tasks/:id/worklogs": "Work Logs",
       "/tasks/create": "Create Task",
       "/tasksHistory": "Task History",
     };
@@ -69,6 +70,10 @@ const Navbar = ({ setProfileOpen }) => {
 
     if (path.startsWith("/tasks/") && path !== "/tasks/create") {
       return "Task Details";
+    }
+
+    if (path.endsWith("/worklogs")) {
+      return "Work Logs";
     }
     const segment = path.split("/")[1];
 
