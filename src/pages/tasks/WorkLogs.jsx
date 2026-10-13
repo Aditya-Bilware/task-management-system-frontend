@@ -223,7 +223,7 @@ const WorkLogs = () => {
               </Typography>
 
               <Typography
-                sx={{ color: "#64748b", fontSize: "0.85rem", fontWeight: 700 }}
+                sx={{ color: "#0a0b0e", fontSize: "0.85rem", fontWeight: 700 }}
               >
                 {pagination?.totalWorkLogs || 0} entries
               </Typography>
