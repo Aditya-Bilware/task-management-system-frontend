@@ -129,25 +129,28 @@ const TaskDetails = () => {
             },
           }}
         >
-          <Button
-            variant="contained"
-            onClick={() => setLogWorkOpen(true)}
-            sx={{
-              textTransform: "none",
-              borderRadius: "10px",
-              px: 2.5,
-              py: 1,
-              fontWeight: 600,
-              boxShadow: "none",
-              backgroundColor: "green",
-              flex: {
-                sx: 1,
-                sm: "initial",
-              },
-            }}
-          >
-            Log Work
-          </Button>
+          {showEditButton() && (
+            <Button
+              variant="contained"
+              onClick={() => setLogWorkOpen(true)}
+              sx={{
+                textTransform: "none",
+                borderRadius: "10px",
+                px: 2.5,
+                py: 1,
+                fontWeight: 600,
+                boxShadow: "none",
+                backgroundColor: "green",
+                flex: {
+                  sx: 1,
+                  sm: "initial",
+                },
+              }}
+            >
+              Log Work
+            </Button>
+          )}
+
           <Button
             variant="outlined"
             onClick={() => navigate(`/tasks/${id}/worklogs`)}
