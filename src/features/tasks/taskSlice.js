@@ -7,7 +7,7 @@ import {
   getTasks,
   updateTaskService,
 } from "../../services/tasks/taskService";
-import { minDelay } from "../../utils/minDelay";
+//import { minDelay } from "../../utils/minDelay";
 import { resetAppState } from "../../app/appActions.js";
 
 export const createTask = createAsyncThunk(
@@ -19,7 +19,7 @@ export const createTask = createAsyncThunk(
 
       const res = await createTaskService(details);
 
-      await minDelay(start);
+      //await minDelay(start);
       return res;
     } catch (err) {
       return thunkAPI.rejectWithValue(
@@ -34,7 +34,7 @@ export const fetchTasks = createAsyncThunk(
 
   async (_, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const state = thunkAPI.getState();
 
@@ -42,7 +42,7 @@ export const fetchTasks = createAsyncThunk(
 
       const res = await getTasks(filters);
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res;
     } catch (err) {
@@ -55,11 +55,11 @@ export const fetchTaskById = createAsyncThunk(
   "tasks/fetchTaskById",
   async (id, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await getTaskById(id);
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res.task;
     } catch (err) {
@@ -93,7 +93,7 @@ export const updateTask = createAsyncThunk(
     try {
       const start = new Date();
       const res = await updateTaskService(id, details);
-      await minDelay(start);
+      //await minDelay(start);
       return res;
     } catch (err) {
       return thunkAPI.rejectWithValue(
@@ -110,7 +110,7 @@ export const deleteTask = createAsyncThunk(
     try {
       const start = new Date();
       const res = await deleteTaskService(id);
-      await minDelay(start);
+      //await minDelay(start);
       return res;
     } catch (err) {
       return thunkAPI.rejectWithValue(

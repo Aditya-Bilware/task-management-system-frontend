@@ -3,7 +3,7 @@ import {
   getEmployeesService,
   getEmployeesStatsService,
 } from "../../services/users/employeeService";
-import { minDelay } from "../../utils/minDelay";
+//import { minDelay } from "../../utils/minDelay";
 
 export const fetchEmployees = createAsyncThunk(
   "employee/fetchEmployee",
@@ -12,7 +12,7 @@ export const fetchEmployees = createAsyncThunk(
     try {
       const start = new Date();
       const res = await getEmployeesService();
-      await minDelay(start);
+      //await minDelay(start);
       return res.employees;
     } catch (err) {
       return thunkAPI.rejectWithValue(
@@ -35,7 +35,7 @@ export const fetchEmployeesStats = createAsyncThunk(
 
       const res = await getEmployeesStatsService(filters);
 
-      await minDelay(start);
+      //await minDelay(start);
       return res;
     } catch (err) {
       return thunkAPI.rejectWithValue(

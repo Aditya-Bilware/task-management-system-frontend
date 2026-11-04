@@ -5,18 +5,18 @@ import {
   getUnreadCountService,
   markNotificationReadService,
 } from "../../services/notifications/notificationsService";
-import { minDelay } from "../../utils/minDelay";
+//import { minDelay } from "../../utils/minDelay";
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
 
   async ({ page = 1, limit = 20 } = {}, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await getNotificationsService({ page, limit });
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res;
     } catch (err) {
@@ -32,11 +32,11 @@ export const fetchUnreadNotificationsCount = createAsyncThunk(
 
   async (_, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await getUnreadCountService();
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res;
     } catch (err) {
@@ -52,11 +52,11 @@ export const markNotificationRead = createAsyncThunk(
 
   async (id, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await markNotificationReadService(id);
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return {
         id,
@@ -75,11 +75,11 @@ export const clearAllNotifications = createAsyncThunk(
 
   async (_, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await clearAllNotificationsService();
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res;
     } catch (err) {

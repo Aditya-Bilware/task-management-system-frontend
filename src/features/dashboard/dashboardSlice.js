@@ -4,18 +4,18 @@ import {
   getStats,
 } from "../../services/dashboard/dashBoardService";
 import { resetAppState } from "../../app/appActions.js";
-import { minDelay } from "../../utils/minDelay";
+//import { minDelay } from "../../utils/minDelay";
 
 export const fetchStats = createAsyncThunk(
   "dashboard/fetchStats",
 
   async (_, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await getStats();
 
-      await minDelay(start);
+      //await minDelay(start);
       return res.stats;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message || "Failed to fetch stats");
@@ -28,11 +28,11 @@ export const fetchRecentTasks = createAsyncThunk(
 
   async (_, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await getRecentTasks();
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res.recentTasks;
     } catch (err) {

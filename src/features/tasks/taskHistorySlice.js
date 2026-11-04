@@ -7,7 +7,7 @@ export const fetchTaskHistory = createAsyncThunk(
     try {
       const start = new Date();
       const res = await getTaskHistoryService(filters);
-      await minDelay(start);
+      //await minDelay(start);
       return res;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.message);
@@ -16,7 +16,7 @@ export const fetchTaskHistory = createAsyncThunk(
 );
 
 import { createSlice } from "@reduxjs/toolkit";
-import { minDelay } from "../../utils/minDelay";
+//import { minDelay } from "../../utils/minDelay";
 
 const initialState = {
   historyTasks: [],

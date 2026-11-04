@@ -3,18 +3,18 @@ import {
   getOverdueTasksCountService,
   getOverdueTasksService,
 } from "../../services/overdueTasks/overdueTasksService";
-import { minDelay } from "../../utils/minDelay";
+//import { minDelay } from "../../utils/minDelay";
 
 export const fetchOverdueTasks = createAsyncThunk(
   "overdue/fetchOverdueTasks",
 
   async ({ page = 1, limit = 20 } = {}, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await getOverdueTasksService({ page, limit });
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res;
     } catch (err) {
@@ -30,11 +30,11 @@ export const fetchOverdueTasksCount = createAsyncThunk(
 
   async (_, thunkAPI) => {
     try {
-      const start = Date.now();
+      //const start = Date.now();
 
       const res = await getOverdueTasksCountService();
 
-      await minDelay(start);
+      //await minDelay(start);
 
       return res;
     } catch (err) {
